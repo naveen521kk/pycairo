@@ -58,6 +58,7 @@ script:
   - python setup.py install --root="$(pwd)"/_root_abs
   - python setup.py bdist_egg
   - python setup.py bdist_wheel
+  - tree -d
   - python setup.py install --root=_root_setup
   - if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi
   - python -m sphinx -W -a -E -b html -n docs docs/_build
