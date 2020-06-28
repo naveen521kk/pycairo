@@ -3,7 +3,7 @@ jobs:
   - os: windows
     language: sh
     python: 3.7
-    env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/" 
+    env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/x64/lib/" 
     install:
       - choco install python --version=$PYVER
       - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
