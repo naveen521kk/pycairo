@@ -1,21 +1,39 @@
-matrix:
+jobs:
   include:
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.8.0
-        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-install:
-  - python -m pip install --upgrade wheel
-  - python -m pip install --upgrade setuptools
-  - python -m pip install --upgrade mypy || true
+  - os: windows
+    language: sh
+    python: 3.7
+    env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/" 
+    install:
+      - choco install python --version=$PYVER
+      - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
+      - cmd.exe //c "RefreshEnv.cmd"
+      - python -m pip install --upgrade pip
+      - python -m pip install --upgrade wheel
+      - python -m pip install --upgrade setuptools
+      - python -m pip install --upgrade mypy || true
+      - cmd.exe //c "RefreshEnv.cmd"
+      - python setup.py install 
+      - python setup.py build
+      - dir
+    script: 
+      - python -m pytest --skip_end_to_end -rs
+  - os: windows
+    language: sh
+    before_install:
+      - choco install python --version 3.8.0
+      - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
 
-script:
-  - python setup.py install
-  - python setup.py bdist_wheel
-  - dir
-  - git config --global user.name "Travis CI"
-  - git checkout -b "travis-build"
-  - git add .
-  - git commit -m "Updates"
-  - git push -u origin travis-build
+  #script:
+    #- 
+    #- python setup.py bdist_wheel
+    #- dir
+    #- git config --global user.name "Travis CI"
+    #- git checkout -b "travis-build"
+    #- git add .
+    #- git commit -m "Updates"
+    #- git push -u origin travis-build
+
+branches:
+  only:
+  - master
