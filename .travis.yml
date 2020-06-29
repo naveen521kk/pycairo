@@ -27,18 +27,8 @@ script:
   - cd dist
   - dir
   - cd ../
-  - pip install pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install pycairo-1.19.2-cp37-cp37m-win_amd64.whl
-  - python testcairo.py
+  - pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl
 
-  #script:
-    #- 
-    #- python setup.py bdist_wheel
-    #- dir
-    #- git config --global user.name "Travis CI"
-    #- git checkout -b "travis-build"
-    #- git add .
-    #- git commit -m "Updates"
-    #- git push -u origin travis-build
 cache:
   directories:
     - $HOME/.cache/pip
