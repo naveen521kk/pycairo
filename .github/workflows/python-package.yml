@@ -25,10 +25,6 @@ jobs:
         
     - name: Install dependencies
       run: |
-        set PYVER=${{ matrix.python-version }}
-        echo %PYVER%
-        set INCLUDE="%cd%/cairocomplied/include/"
-        set LIB="%cd%/cairocomplied/lib/x64/"
         python -m pip install --upgrade pip
         python -m pip install --upgrade wheel
         python -m pip install --upgrade setuptools
@@ -45,6 +41,10 @@ jobs:
         cd dist
         dir
         cd ../
+      env:
+        PYVER=${{ matrix.python-version }}
+        INCLUDE="%cd%/cairocomplied/include/"
+        LIB="%cd%/cairocomplied/lib/x64/"
     - name: Test with pytest
       run: |
         pytest
