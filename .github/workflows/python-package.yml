@@ -22,16 +22,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-      
-    - name: Setup Environment Variables
-      run : |
-        set PYVER=${{ matrix.python-version }}
-        set INCLUDE="$PWD/cairocomplied/include/"
-        set LIB="$PWD/cairocomplied/lib/x64/"
-        cmd.exe //c "RefreshEnv.cmd"
         
     - name: Install dependencies
       run: |
+        set PYVER=${{ matrix.python-version }}
+        echo %PYVER%
+        set INCLUDE="%cd%/cairocomplied/include/"
+        set LIB="%cd%/cairocomplied/lib/x64/"
         python -m pip install --upgrade pip
         python -m pip install --upgrade wheel
         python -m pip install --upgrade setuptools
