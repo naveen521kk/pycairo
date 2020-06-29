@@ -27,14 +27,7 @@ script:
   - cd dist
   - dir
   - cd ../
-  - python -m pip install -e .
   - python -m pytest
-  - git checkout -b "travis-build"
-  - git add .
-  - git config --global user.name "Travis CI"
-  - git config --global user.email "travis@travis-ci.com"
-  - git commit -m "Updates"
-  - git push -u origin travis-build
 
   #script:
     #- 
