@@ -28,7 +28,7 @@ script:
   - dir
   - cd ../
   - pip install pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install pycairo-1.19.2-cp37-cp37m-win_amd64.whl
-  - python -m pytest
+  - python testcairo.py
 
   #script:
     #- 
@@ -50,6 +50,6 @@ branches:
 deploy:
   provider: releases
   api_key: $GITHUBOAUTHTOKEN
-  file: "dist/"
+  file: dist/
   skip_cleanup: true
   draft: true
