@@ -40,6 +40,6 @@ branches:
 deploy:
   provider: releases
   api_key: $GITHUBOAUTHTOKEN
-  file: dist/
+  file: dist/*
   skip_cleanup: true
   draft: true
