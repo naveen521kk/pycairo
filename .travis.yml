@@ -1,49 +1,40 @@
-jobs:
+matrix:
   include:
-  - os: windows
-    language: sh
-    python: 3.7
-    env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" 
-    install:
-      - choco install python --version=$PYVER
-      - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
-      - cmd.exe //c "RefreshEnv.cmd"
-      - python -m pip install --upgrade pip
-      - python -m pip install --upgrade wheel
-      - python -m pip install --upgrade setuptools
-      - python -m pip install pytest
-      - python -m pip install --upgrade mypy || true
-      - cmd.exe //c "RefreshEnv.cmd"
-    script: 
-      - python setup.py install 
-      - python setup.py build
-      - python setup.py bdist_wheel
-      - dir
-      - cd dist
-      - dir
-      - python -m pip install .
-      - python -m pytest
-  - os: windows
-    language: sh
-    python: 3.8
-    env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" 
-    install:
-      - choco install python --version=$PYVER
-      - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
-      - cmd.exe //c "RefreshEnv.cmd"
-      - python -m pip install --upgrade pip
-      - python -m pip install --upgrade wheel
-      - python -m pip install --upgrade setuptools
-      - python -m pip install pytest
-      - python -m pip install --upgrade mypy || true
-      - cmd.exe //c "RefreshEnv.cmd"
-    script: 
-      - python setup.py install 
-      - python setup.py build
-      - python setup.py bdist_wheel
-      - dir
-      - if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi
-      - python -m pytest --skip_end_to_end -rs
+    - os: windows
+      language: sh
+      python: 3.7
+      env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" 
+    - os: windows
+      language: sh
+      python: 3.8
+      env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" 
+
+install:
+  - choco install python --version=$PYVER
+  - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
+  - cmd.exe //c "RefreshEnv.cmd"
+  - python -m pip install --upgrade pip
+  - python -m pip install --upgrade wheel
+  - python -m pip install --upgrade setuptools
+  - python -m pip install pytest
+  - python -m pip install --upgrade mypy || true
+  - cmd.exe //c "RefreshEnv.cmd"
+script: 
+  - python setup.py install 
+  - python setup.py build
+  - python setup.py bdist_wheel
+  - dir
+  - cd dist
+  - dir
+  - cd ..\
+  - python -m pip install .
+  - python -m pytest
+  - git checkout -b "travis-build"
+  - git add .
+  - git config --global user.name "Travis CI"
+  - git config --global user.email "travis@travis-ci.com"
+  - git commit -m "Updates"
+  - git push -u origin travis-build
 
   #script:
     #- 
