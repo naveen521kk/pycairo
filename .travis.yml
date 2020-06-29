@@ -11,18 +11,37 @@ jobs:
       - python -m pip install --upgrade pip
       - python -m pip install --upgrade wheel
       - python -m pip install --upgrade setuptools
+      - python -m pip install pytest
       - python -m pip install --upgrade mypy || true
       - cmd.exe //c "RefreshEnv.cmd"
+    script: 
       - python setup.py install 
       - python setup.py build
+      - python setup.py bdist_wheel
       - dir
-    script: 
+      - if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi
       - python -m pytest --skip_end_to_end -rs
   - os: windows
     language: sh
-    before_install:
-      - choco install python --version 3.8.0
-      - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+    python: 3.8
+    env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/" 
+    install:
+      - choco install python --version=$PYVER
+      - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
+      - cmd.exe //c "RefreshEnv.cmd"
+      - python -m pip install --upgrade pip
+      - python -m pip install --upgrade wheel
+      - python -m pip install --upgrade setuptools
+      - python -m pip install pytest
+      - python -m pip install --upgrade mypy || true
+      - cmd.exe //c "RefreshEnv.cmd"
+    script: 
+      - python setup.py install 
+      - python setup.py build
+      - python setup.py bdist_wheel
+      - dir
+      - if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi
+      - python -m pytest --skip_end_to_end -rs
 
   #script:
     #- 
