@@ -56,6 +56,6 @@ branches:
 deploy:
   provider: releases
   api_key: $GITHUBOAUTHTOKEN
-  file: "FILE TO UPLOAD"
+  file: "dist/"
   skip_cleanup: true
   draft: true
