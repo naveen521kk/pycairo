@@ -19,12 +19,14 @@ jobs:
       - python setup.py build
       - python setup.py bdist_wheel
       - dir
-      - if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi
-      - python -m pytest --skip_end_to_end -rs
+      - cd dist
+      - dir
+      - python -m pip install .
+      - python -m pytest
   - os: windows
     language: sh
     python: 3.8
-    env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/" 
+    env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" 
     install:
       - choco install python --version=$PYVER
       - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
