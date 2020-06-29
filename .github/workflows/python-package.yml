@@ -25,9 +25,10 @@ jobs:
       
     - name: Setup Environment Variables
       run : |
-        set PYVER=${{ matrix.python-version }}
-        set INCLUDE="$PWD/cairocomplied/include/"
-        set LIB="$PWD/cairocomplied/lib/x64/"
+        setx PYVER=${{ matrix.python-version }}
+        setx INCLUDE="$PWD/cairocomplied/include/"
+        setx LIB="$PWD/cairocomplied/lib/x64/"
+        cmd.exe //c "RefreshEnv.cmd"
         
     - name: Install dependencies
       run: |
@@ -36,6 +37,7 @@ jobs:
         python -m pip install --upgrade setuptools
         python -m pip install pytest
         python -m pip install --upgrade mypy || true
+        cmd.exe //c "RefreshEnv.cmd"
         
     - name: Install Package
       run: |
