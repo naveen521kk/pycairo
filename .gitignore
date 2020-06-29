@@ -17,7 +17,7 @@
 *.so
 .cache
 MANIFEST
-dist
+s
 .hypothesis
 *.pyd
 *.dll

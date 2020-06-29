@@ -27,7 +27,7 @@ script:
   - cd dist
   - dir
   - cd ..\
-  - python -m pip install .
+  - python -m pip install -e .
   - python -m pytest
   - git checkout -b "travis-build"
   - git add .
