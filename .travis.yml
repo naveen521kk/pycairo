@@ -39,7 +39,7 @@ branches:
   - master
 deploy:
   provider: releases
+  file_glob: true
   api_key: $GITHUBOAUTHTOKEN
   file: dist/*
   skip_cleanup: true
-  draft: true
