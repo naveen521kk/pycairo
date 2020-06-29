@@ -26,7 +26,7 @@ script:
   - dir
   - cd dist
   - dir
-  - cd ..\
+  - cd ../
   - python -m pip install -e .
   - python -m pytest
   - git checkout -b "travis-build"
@@ -45,7 +45,17 @@ script:
     #- git add .
     #- git commit -m "Updates"
     #- git push -u origin travis-build
-
+cache:
+  directories:
+    - $HOME/.cache/pip
+before_cache:
+  - rm -f $HOME/.cache/pip/log/debug.log
 branches:
   only:
   - master
+deploy:
+  provider: releases
+  api_key: $GITHUBOAUTHTOKEN
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  draft: true
