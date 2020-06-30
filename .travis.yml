@@ -27,8 +27,8 @@ script:
   - dir
   - cd dist
   - dir
-  - if [[ "$PYVER" == "3.8.3" ]]; pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl -q; fi
-  - if [[ "$PYVER" == "3.7.7" ]]; pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl -q; fi
+  - if [[ "$PYVER" == "3.8.3" ]]; then pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl; fi
+  - if [[ "$PYVER" == "3.7.7" ]]; then pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl; fi
   - cd ../
   - python -m pytest
   #- pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl
