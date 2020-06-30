@@ -1,0 +1,71 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: PyCairo Wheel Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Buile on ${{ matrix.python-version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+        os: [windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade wheel
+        python -m pip install --upgrade setuptools
+        python -m pip install pytest
+        python -m pip install --upgrade mypy || true
+        cmd.exe //c "RefreshEnv.cmd"
+        
+    - name: Install Package
+      run: |
+        python setup.py install
+        python setup.py build
+        python setup.py bdist_wheel
+        dir
+        cd dist
+        dir
+        cd ../
+      env:
+        PYVER: ${{ matrix.python-version }}
+        INCLUDE: "%cd%/cairocomplied/include/"
+        LIB: "%cd%/cairocomplied/lib/x64/"
+    - name: Test with pytest
+      run: |
+        pytest
+      env:
+        PYVER: ${{ matrix.python-version }}
+        INCLUDE: "%cd%/cairocomplied/include/"
+        LIB: "%cd%/cairocomplied/lib/x64/"
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: true
+        prerelease: false
+    
