@@ -20,7 +20,6 @@ MANIFEST
 s
 .hypothesis
 *.pyd
-*.dll
 .mypy_cache
 .pytest_cache
 .idea

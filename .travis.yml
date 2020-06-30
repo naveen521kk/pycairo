@@ -8,7 +8,39 @@ matrix:
       language: sh
       python: 3.8
       env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" PYNAME="3.8"
-
+before_install:
+- |-
+    case $TRAVIS_OS_NAME in
+      windows)
+        [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
+        choco uninstall -y mingw
+        choco upgrade --no-progress -y msys2
+        export msys2='cmd //C RefreshEnv.cmd '
+        export msys2+='& set MSYS=winsymlinks:nativestrict '
+        export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start'
+        export mingw64="$msys2 -mingw64 -full-path -here -c "\"\$@"\" --"
+        export msys2+=" -msys2 -c "\"\$@"\" --"
+        $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain
+        ## Install more MSYS2 packages from https://packages.msys2.org/base here
+        taskkill //IM gpg-agent.exe //F  # https://travis-ci.community/t/4967
+        export PATH=/C/tools/msys64/mingw64/bin:$PATH
+        export MAKE=mingw32-make  # so that Autotools can find it
+        ;;
+    esac
+before_cache:
+  - |-
+    case $TRAVIS_OS_NAME in
+      windows)
+        # https://unix.stackexchange.com/a/137322/107554
+        $msys2 pacman --sync --clean --noconfirm
+        ;;
+    esac
+  - rm -f $HOME/.cache/pip/log/debug.log
+cache:
+    directories:
+    - $HOME/AppData/Local/Temp/chocolatey
+    - /C/tools/msys64
+    - $HOME/.cache/pip
 install:
   - choco install python --version=$PYVER
   - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
@@ -19,6 +51,34 @@ install:
   - python -m pip install pytest
   - python -m pip install --upgrade mypy || true
   - cmd.exe //c "RefreshEnv.cmd"
+  - export ROOTDIR="$pwd\cairocomplied"
+  - rmdir /S /Q %ROOTDIR%
+  - mkdir %ROOTDIR%
+  - cd %ROOTDIR%
+  - curl http://www.zlib.net/zlib-1.2.3.tar.gz -o zlib.tgz
+  - curl ftp://ftp.simplesystems.org/pub/libpng/png/src/libpng-1.2.40.tar.gz -o libpng.tgz
+  - curl http://www.cairographics.org/releases/pixman-0.16.2.tar.gz -o pixman.tgz
+  - curl http://www.cairographics.org/releases/cairo-1.8.8.tar.gz -o cairo.tgz
+  - tar -xzf zlib.tgz
+  - tar -xzf libpng.tgz
+  - tar -xzf pixman.tgz
+  - tar -xzf cairo.tgz
+  - move zlib-* zlib
+  - move libpng-* libpng
+  - move pixman-* pixman
+  - move cairo-* cairo
+  - mkdir %ROOTDIR%\zlib\projects\visualc71
+  - cd %ROOTDIR%\zlib\projects\visualc71
+  - copy %ROOTDIR%\libpng\projects\visualc71\zlib.vcproj .
+  - vcbuild /upgrade zlib.vcproj
+  - sed /RuntimeLibrary=/s/2/0/ zlib.vcproj > fixed.vcproj
+  - move /Y fixed.vcproj zlib.vcproj
+  - vcbuild zlib.vcproj "LIB Release"
+  - cd %ROOTDIR%\libpng\projects\visualc71
+  - vcbuild /upgrade libpng.vcproj
+  - sed /RuntimeLibrary=/s/2/0/ libpng.vcproj > fixed.vcproj
+  - move /Y fixed.vcproj libpng.vcproj
+   vcbuild libpng.vcproj "LIB Release"
 script: 
   - python setup.py install 
   - python setup.py build
@@ -29,17 +89,14 @@ script:
   - cd ../
   #- pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl
 
-cache:
-  directories:
-    - $HOME/.cache/pip
-before_cache:
-  - rm -f $HOME/.cache/pip/log/debug.log
+
 branches:
   only:
   - master
+
 deploy:
   provider: releases
   api_key: $GITHUBOAUTHTOKEN
-  file: dist/
+  file: dist/*
   skip_cleanup: true
   draft: true
