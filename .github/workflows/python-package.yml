@@ -42,13 +42,16 @@ jobs:
         dir
         cd ../
       env:
-        PYVER=${{ matrix.python-version }}
-        INCLUDE="%cd%/cairocomplied/include/"
-        LIB="%cd%/cairocomplied/lib/x64/"
+        PYVER: ${{ matrix.python-version }}
+        INCLUDE: "%cd%/cairocomplied/include/"
+        LIB: "%cd%/cairocomplied/lib/x64/"
     - name: Test with pytest
       run: |
         pytest
-
+      env:
+        PYVER: ${{ matrix.python-version }}
+        INCLUDE: "%cd%/cairocomplied/include/"
+        LIB: "%cd%/cairocomplied/lib/x64/"
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Create Release
