@@ -580,7 +580,7 @@ def main():
         "build_tests": build_tests,
         "sdist": sdist,
     }
-    if platform.system() == "Windows":
+    if True:
         setup(
             name="pycairo",
             version=PYCAIRO_VERSION,
@@ -596,8 +596,8 @@ def main():
                 "cairo": [
                     "__init__.pyi",
                     "py.typed",
+                    "cairo.dll",
                 ],
-                "cairocomplied": ['lib/x64/cairo.dll'],
             },
             classifiers=[
                 'Operating System :: OS Independent',

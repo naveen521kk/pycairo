@@ -19,7 +19,8 @@ install:
   - python -m pip install pytest
   - python -m pip install --upgrade mypy || true
   - cmd.exe //c "RefreshEnv.cmd"
-script: 
+script:
+  - cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
   - python setup.py install 
   - python setup.py build
   - python setup.py bdist_wheel
