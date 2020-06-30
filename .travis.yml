@@ -28,6 +28,7 @@ script:
   - cd dist
   - dir
   - cd ../
+  - python -m pytest
   #- pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl
 
 cache:
