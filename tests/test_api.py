@@ -313,3 +313,4 @@ def test_surface_mime_data_for_pdf():
     context.paint()
     surface.finish()
     assert jpeg_bytes in file_like.getvalue()
+test_version()
