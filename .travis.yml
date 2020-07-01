@@ -2,6 +2,10 @@ matrix:
   include:
     - os: windows
       language: sh
+      python: 3.6
+      env: PYVER="3.6.8" PYDIR="Python36" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" CAIRO_VERSION=1.15.12
+    - os: windows
+      language: sh
       python: 3.7
       env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" CAIRO_VERSION=1.15.12
     - os: windows
@@ -10,27 +14,15 @@ matrix:
       env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" PYNAME="3.8" CAIRO_VERSION=1.15.12
 
 install:
-  - source .travis/downloadCairo.sh
-  - choco install python --version=$PYVER
-  - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
-  - cmd.exe //c "RefreshEnv.cmd"
-  - python -m pip install --upgrade pip
-  - python -m pip install --upgrade wheel
-  - python -m pip install --upgrade setuptools
-  - python -m pip install pytest
-  - python -m pip install --upgrade mypy || true
-  - cmd.exe //c "RefreshEnv.cmd"
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then source .travis/downloadCairo.sh; fi
 script:
-  - cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
-  - python setup.py install 
-  - python setup.py build
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll; fi
   - python setup.py bdist_wheel
-  - source .travis/runPycairox86.sh
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then source .travis/runPycairox86.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then source .travis/runPycairox64.sh; fi
   - dir
   - cd dist
   - dir
-  - if [[ "$PYVER" == "3.8.3" ]]; then pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl; fi
-  - if [[ "$PYVER" == "3.7.7" ]]; then pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl; fi
   - cd ../
   #- python -m pytest
   #- pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl
