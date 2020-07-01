@@ -18,14 +18,13 @@ install:
   - python -m pip install --upgrade setuptools
   - python -m pip install pytest
   - python -m pip install --upgrade mypy || true
-  - python -m pip install cibuildwheel==1.5.1
   - cmd.exe //c "RefreshEnv.cmd"
 script:
   - cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
   - python setup.py install 
   - python setup.py build
   - python setup.py bdist_wheel
-  - python -m cibuildwheel --output-dir dist
+  - source .travis/runPycairox86.sh
   - dir
   - cd dist
   - dir
