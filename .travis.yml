@@ -3,32 +3,65 @@ matrix:
     - os: windows
       language: sh
       python: 3.6
+      name: Build on Python 3.6.8 in Windows
       env: PYVER="3.6.8" PYDIR="Python36" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" CAIRO_VERSION=1.15.10
     - os: windows
       language: sh
       python: 3.7
+      name: Build on Python 3.7.7 in Windows
       env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" CAIRO_VERSION=1.15.10
     - os: windows
       language: sh
       python: 3.8
+      name: Build on Python 3.8.3 in Windows
       env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" PYNAME="3.8" CAIRO_VERSION=1.15.10
-
+    - os: linux
+      dist: trusty
+      language: python
+      python: "3.5"
+      env: CFLAGS="-Werror -coverage"
+    - os: linux
+      dist: trusty
+      language: python
+      python: "3.6"
+      env: CFLAGS="-Werror -coverage"
+    - os: linux
+      dist: xenial
+      language: python
+      python: "3.7"
+      env: CFLAGS="-Werror -coverage"
+    - os: linux
+      dist: xenial
+      language: python
+      python: "3.8"
+      env: CFLAGS="-Werror -coverage"
+    - os: osx
+      osx_image: xcode11.3
+      language: generic
+      env: CFLAGS="-Werror -coverage"
 install:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/downloadCairo.sh; fi
-  - choco install python --version=$PYVER
-  - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
-  - cmd.exe //c "RefreshEnv.cmd"
-  - python -m pip install --upgrade pip
-  - python -m pip install --upgrade wheel
-  - python -m pip install --upgrade setuptools
-  - python -m pip install pytest
-  - python -m pip install --upgrade mypy || true
-  - cmd.exe //c "RefreshEnv.cmd"
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis_retry sudo apt-get update -q; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then travis_retry sudo apt-get install -y libcairo2-dev; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install pkg-config || true; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install cairo || true; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew unlink python@2 || true; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install python || true; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then python3 -m pip install virtualenv; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then virtualenv ../venv -p python3; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then source ../venv/bin/activate; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install --upgrade setuptools; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install --upgrade pytest flake8 "sphinx<3" sphinx_rtd_theme coverage codecov hypothesis attrs; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install --upgrade mypy || true; fi
 script:
+  #windows build
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll; fi
-  - python setup.py bdist_wheel
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
-  #- if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
+  #other builds
+  - python setup.py bdist_wheel
   - dir
   - cd dist
   - dir
