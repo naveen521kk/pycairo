@@ -19,25 +19,30 @@ matrix:
       dist: trusty
       language: python
       python: "3.5"
+      name: Build on Python 3.5 in Trusty Linux
       env: CFLAGS="-Werror -coverage"
     - os: linux
       dist: trusty
       language: python
       python: "3.6"
+      name: Build on Python 3.6 in Trusty Linux
       env: CFLAGS="-Werror -coverage"
     - os: linux
       dist: xenial
       language: python
       python: "3.7"
+      name: Build on Python 3.7 in Xenial Linux
       env: CFLAGS="-Werror -coverage"
     - os: linux
       dist: xenial
       language: python
       python: "3.8"
+      name: Build on Python 3.8 in Xenial Linux
       env: CFLAGS="-Werror -coverage"
     - os: osx
       osx_image: xcode11.3
       language: generic
+      name: Build on Python 3.8 in Mac OSX xcode11.3
       env: CFLAGS="-Werror -coverage"
 install:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/downloadCairo.sh; fi
@@ -62,17 +67,14 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
   #other builds
   - python setup.py bdist_wheel
-  - dir
-  - cd dist
-  - dir
-  - cd ../
-  #- python -m pytest
-  #- pip install --upgrade pycairo-1.19.2-cp38-cp38-win_amd64.whl || pip install --upgrade pycairo-1.19.2-cp37-cp37m-win_amd64.whl
 
 cache:
   directories:
     - $HOME/.cache/pip
+    - $HOME/Library/Caches/Homebrew
+
 before_cache:
+  - brew cleanup
   - rm -f $HOME/.cache/pip/log/debug.log
 branches:
   only:
