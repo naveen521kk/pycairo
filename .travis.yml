@@ -3,13 +3,14 @@ matrix:
     - os: windows
       language: sh
       python: 3.7
-      env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" 
+      env: PYVER="3.7.7" PYDIR="Python37" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" CAIRO_VERSION=1.15.12
     - os: windows
       language: sh
       python: 3.8
-      env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" PYNAME="3.8"
+      env: PYVER="3.8.3" PYDIR="Python38" INCLUDE="$PWD/cairocomplied/include/" LIB="$PWD/cairocomplied/lib/x64/" PYNAME="3.8" CAIRO_VERSION=1.15.12
 
 install:
+  - source .travis/downloadCairo.sh
   - choco install python --version=$PYVER
   - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
   - cmd.exe //c "RefreshEnv.cmd"
@@ -48,3 +49,4 @@ deploy:
   api_key: $GITHUBOAUTHTOKEN
   file: dist/*
   skip_cleanup: true
+  draft: true

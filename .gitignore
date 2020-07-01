@@ -24,7 +24,7 @@ s
 .pytest_cache
 .idea
 *.egg-info
-
+*.dll
 # image files
 *.pdf
 *.png

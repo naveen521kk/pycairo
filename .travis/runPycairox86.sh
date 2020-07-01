@@ -1,5 +1,5 @@
 
-curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -O nuget.exe
+curl -L https://aka.ms/nugetclidl -O nuget.exe
 ./nuget install pythonx86 -Version $PYVER -OutputDirectory pythonx86
 ./pythonx86/pythonx86.$PYVER/tools/python.exe -m pip install --upgrade pip
 ./pythonx86/pythonx86.$PYVER/tools/python.exe -m pip install --upgrade wheel
