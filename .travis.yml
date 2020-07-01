@@ -15,10 +15,20 @@ matrix:
 
 install:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/downloadCairo.sh; fi
+  - choco install python --version=$PYVER
+  - export PATH="/c/$PYDIR:/c/$PYDIR/Scripts:$PATH"
+  - cmd.exe //c "RefreshEnv.cmd"
+  - python -m pip install --upgrade pip
+  - python -m pip install --upgrade wheel
+  - python -m pip install --upgrade setuptools
+  - python -m pip install pytest
+  - python -m pip install --upgrade mypy || true
+  - cmd.exe //c "RefreshEnv.cmd"
 script:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
-  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
+  #- if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
+  - python setup.py bdist_wheel
   - dir
   - cd dist
   - dir
