@@ -63,8 +63,7 @@ install:
 script:
   #windows build
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
-  #other builds
-  - python setup.py bdist_wheel
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist_wheel; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
 
 cache:
