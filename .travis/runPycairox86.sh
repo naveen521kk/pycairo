@@ -13,6 +13,7 @@ export INCLUDE="$PWD/cairocomplied/include/"
 export LIB="$PWD/cairocomplied/lib/x86/"
 cmd.exe //c "RefreshEnv.cmd"
 python setup.py bdist_wheel
+cp buildcairo/dist/WHEELSNAMEx32 dist/WHEELSNAMEx32
 python -m pip install dist/WHEELSNAMEx32
 python testcairo.py
 
