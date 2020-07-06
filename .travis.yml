@@ -64,9 +64,6 @@ script:
   #windows build
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m coverage run --branch setup.py test; fi
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m codecov --required || true; fi
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m flake8 .; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py sdist; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py install --root=_root; fi
