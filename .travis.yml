@@ -60,11 +60,10 @@ install:
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install --upgrade setuptools; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install --upgrade pytest flake8 "sphinx<3" sphinx_rtd_theme coverage codecov hypothesis attrs; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install --upgrade mypy || true; fi
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m pip install cibuildwheel==1.5.1; fi
 script:
   #windows build
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m cibuildwheel --output-dir dist; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist_wheel; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
 
 cache:
