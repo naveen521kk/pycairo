@@ -10,4 +10,3 @@ export INCLUDE="$PWD/cairocomplied/include/"
 export LIB="$PWD/cairocomplied/lib/x86/"
 cmd.exe //c "RefreshEnv.cmd"
 ./pythonx86/pythonx86.$PYVER/tools/python.exe setup.py bdist_wheel
-./pythonx86/pythonx86.$PYVER/tools/python.exe -m pip install dist/WHEELSNAMEx32
