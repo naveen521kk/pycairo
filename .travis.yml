@@ -63,8 +63,19 @@ install:
 script:
   #windows build
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox64.sh; fi
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist_wheel; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then source .travis/runPycairox86.sh; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m coverage run --branch setup.py test; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m codecov --required || true; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m flake8 .; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py sdist; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py install --root=_root; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py install --root="$(pwd)"/_root_abs; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist_egg; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py bdist_wheel; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py install --root=_root_setup; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi; fi
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m sphinx -W -a -E -b html -n docs docs/_build; fi
 
 cache:
   directories:
