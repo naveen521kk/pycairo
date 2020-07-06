@@ -84,6 +84,8 @@ before_cache:
 branches:
   only:
   - master
+  - windows-wheels
+  - /pycairo-\d.\d{2}/
 deploy:
   provider: releases
   file_glob: true
