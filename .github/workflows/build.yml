@@ -9,7 +9,7 @@ jobs:
     env:
       CIBW_BUILD: "cp35-* cp36-* cp37-* cp38-*"
       CIBW_BEFORE_ALL_LINUX: "sudo apt-get install -y libcairo2-dev"
-      CIBW_BEFORE_ALL_MACOS: "brew install pkg-config || true || brew install cairo || true ||export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
+      CIBW_BEFORE_ALL_MACOS: "brew install pkg-config || true || brew install cairo || true ||export PKG_CONFIG_PATH=\"/usr/local/opt/libffi/lib/pkgconfig\""
     strategy:
       matrix:
         os: [ubuntu-18.04, macos-latest]
