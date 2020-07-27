@@ -83,9 +83,8 @@ before_cache:
   - rm -f $HOME/.cache/pip/log/debug.log
 branches:
   only:
-  - master
-  - windows-wheels
   - /pycairo-\d.\d{2}/
+  - master
 deploy:
   provider: releases
   file_glob: true
