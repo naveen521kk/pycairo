@@ -84,6 +84,7 @@ before_cache:
 branches:
   only:
   - /pycairo-\d.\d{2}/
+  - master
 deploy:
   provider: releases
   file_glob: true
