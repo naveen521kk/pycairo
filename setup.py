@@ -5,7 +5,6 @@ import subprocess
 import sys
 import os
 import errno
-import platform
 
 try:
     from setuptools import setup
@@ -340,7 +339,6 @@ class install_pkgconfig(Command):
         with open(target, "wb") as h:
             h.write((u"""\
 prefix=%(prefix)s
-
 Name: Pycairo
 Description: Python %(py_version)d bindings for cairo
 Version: %(version)s
@@ -597,43 +595,24 @@ def main():
                 "py.typed",
                 "cairo.dll",
             ],
-            cmdclass=cmdclass,
-            python_requires='>=3.5, <4',
-        )
-    else:
-        setup(
-            name="pycairo",
-            version=PYCAIRO_VERSION,
-            url="https://pycairo.readthedocs.io",
-            description="Python interface for cairo",
-            long_description=long_description,
-            maintainer="Christoph Reiter",
-            maintainer_email="reiter.christoph@gmail.com",
-            license="LGPL-2.1-only OR MPL-1.1",
-            ext_modules=[cairo_ext],
-            packages=["cairo"],
-            package_data={
-                "cairo": [
-                    "__init__.pyi",
-                    "py.typed",
-                ],
-            },
-            classifiers=[
-                'Operating System :: OS Independent',
-                'Programming Language :: Python :: 3',
-                'Programming Language :: Python :: 3.5',
-                'Programming Language :: Python :: 3.6',
-                'Programming Language :: Python :: 3.7',
-                'Programming Language :: Python :: 3.8',
-                'Programming Language :: Python :: Implementation :: CPython',
-                'Programming Language :: Python :: Implementation :: PyPy',
-                ('License :: OSI Approved :: '
-                 'GNU Lesser General Public License v2 (LGPLv2)'),
-                'License :: OSI Approved :: Mozilla Public License 1.1 (MPL 1.1)',
-            ],
-            cmdclass=cmdclass,
-            python_requires='>=3.5, <4',
-        )
+        },
+        classifiers=[
+            'Operating System :: OS Independent',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.5',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Programming Language :: Python :: 3.8',
+            'Programming Language :: Python :: Implementation :: CPython',
+            'Programming Language :: Python :: Implementation :: PyPy',
+            ('License :: OSI Approved :: '
+             'GNU Lesser General Public License v2 (LGPLv2)'),
+            'License :: OSI Approved :: Mozilla Public License 1.1 (MPL 1.1)',
+        ],
+        cmdclass=cmdclass,
+        python_requires='>=3.5, <4',
+    )
+
 
 if __name__ == "__main__":
     main()
