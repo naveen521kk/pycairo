@@ -11,6 +11,9 @@ pytestmark = pytest.mark.skipif(
     sys.version_info[:2] < (3, 6), reason="Py3.6 only")
 pytestmark
 
+skipwindows = pytest.mark.skipif(sys.platform == "win32", reason="does not run on windows")
+
+skipwindows
 
 def test_mypy():
     out, err, status = mypy.run([os.path.dirname(cairo.__path__[0])])
