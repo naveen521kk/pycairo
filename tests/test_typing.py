@@ -14,11 +14,11 @@ pytestmark
 skipwindows = pytest.mark.skipif(sys.platform == "win32", reason="Is not a valid test on windows")
 
 
-
 def test_mypy():
     out, err, status = mypy.run([os.path.dirname(cairo.__path__[0])])
     if status != 0:
         raise Exception("\n" + "\n".join([out, err]))
+
 
 @skipwindows
 def test_typing():
