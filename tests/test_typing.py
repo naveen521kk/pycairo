@@ -11,6 +11,8 @@ pytestmark = pytest.mark.skipif(
     sys.version_info[:2] < (3, 6), reason="Py3.6 only")
 pytestmark
 
+skipwindows = pytest.mark.skipif(sys.platform == "win32", reason="Is not a valid test on windows")
+
 
 def test_mypy():
     out, err, status = mypy.run([os.path.dirname(cairo.__path__[0])])
@@ -18,6 +20,7 @@ def test_mypy():
         raise Exception("\n" + "\n".join([out, err]))
 
 
+@skipwindows
 def test_typing():
     mod = types.ModuleType("cairo")
     stub = os.path.join(cairo.__path__[0], "__init__.pyi")
