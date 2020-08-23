@@ -23,8 +23,15 @@ jobs:
           update: true
       - shell: msys2 {0}
         run: |
-          pacman -S --noconfirm mingw-w64-x86_64-cairo
+          echo "This is path Variable"
           echo $PATH
-          which "msys2"
+          echo "This is INCLUDE Variable"
           echo $INCLUDE
+          echo "This is LIB Variable"
           echo $LIB
+          echo "::set-env name=PATH::$PATH"
+          echo "::set-env name=LIB::$LIB"
+          echo "::set-env name=INCLUDE::$INCLUDE"
+      - name: Test path
+        run: |
+          echo $PATH
