@@ -19,7 +19,7 @@ jobs:
       - uses: msys2/setup-msys2@v2
         name: Setup Msys
         with:
-          install: git python mingw-w64-x86_64-cairo
+          install: git python pip3 mingw-w64-x86_64-cairo
           update: true
       - shell: msys2 {0}
         run: |
@@ -29,9 +29,9 @@ jobs:
           echo $INCLUDE
           echo "This is LIB Variable"
           echo $LIB
-          pip install --upgrade pip
-          pip install --upgrade setuptools
-          pip install --upgrade wheel
+          pip3 install --upgrade pip
+          pip3 install --upgrade setuptools
+          pip3 install --upgrade wheel
           python setup.py bdist_wheel
           echo "::set-env name=PATH::$PATH"
           echo "::set-env name=LIB::$LIB"
