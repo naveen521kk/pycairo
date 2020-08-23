@@ -22,9 +22,6 @@ jobs:
           msystem: MSYS
           install: mingw-w64-x86_64-cairo
           update: true
-      - shell: msys2 {0}
-        run: |
-          which cairo.dll
       - name: Where is it?
         run: |
           cmd.exe /C "where cairo.dll"
