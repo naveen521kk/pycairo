@@ -76,9 +76,10 @@ install:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then curl -sS -L https://aka.ms/nugetclidl -o $TMP/nuget.exe; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then curl -sS -L https://github.com/preshing/cairo-windows/releases/download/$CAIRO_VERSION/cairo-windows-$CAIRO_VERSION.zip -o $TMP/cairo-windows-$CAIRO_VERSION.zip; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then 7z x $TMP/cairo-windows-$CAIRO_VERSION.zip -o$TMP; fi
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then mv cairo-windows-$CAIRO_VERSION cairocomplied; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then $TMP/nuget install python -Version $PYTHON_VERSION -OutputDirectory $TMP/nuget-$ARCH; fi
-  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export INCLUDE="$TMP/cairo-windows-$CAIRO_VERSION/include"; fi
-  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export LIB="$TMP/cairo-windows-$CAIRO_VERSION/lib/$ARCH"; fi
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export INCLUDE="$TMP/cairocomplied/include/"; fi
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export LIB="$TMP/cairocomplied/lib/$ARCH/"; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export PATH=$TMP/nuget-$ARCH/python.$PYTHON_VERSION/tools/:$TMP/nuget-$ARCH/python.$PYTHON_VERSION/tools/Scripts:$PATH; fi
   - python -m pip install --upgrade wheel
   - python -m pip install --upgrade setuptools
@@ -87,7 +88,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" != "osx" ]] && [[ "$TRAVIS_PYTHON_VERSION" != "3.8" ]] && [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]]; then python -m pip install --upgrade pygame; fi
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]] ; then cp $TMP/cairo-windows-$CAIRO_VERSION/lib/$ARCH/cairo.dll cairo/cairo.dll; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]] ; then cp $TMP/cairocomplied/lib/$ARCH/cairo.dll cairo/cairo.dll; fi
   - python -m coverage run --branch setup.py test
   - python -m codecov --required || true
   - python -m flake8 .
