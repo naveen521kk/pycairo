@@ -20,11 +20,10 @@ jobs:
         name: Setup Msys
         with:
           msystem: MSYS
-          install: python git mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
+          install: mingw-w64-x86_64-cairo
           update: true
       - shell: msys2 {0}
         run: |
-          pacman -S mingw-w64-x86_64-cairo
           which cairo.dll
       - name: Where is it?
         run: |
