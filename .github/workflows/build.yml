@@ -37,8 +37,8 @@ jobs:
       - name: Test path
         run: |
           dir
-          $env:INCLUDE="$($PWD)\include\"
-          $env:INCLUDE="$($PWD)\lib\"
+          $env:INCLUDE="D:\a\_temp\msys\msys64\mingw64\include\cairo"
+          $env:LIB="D:\a\_temp\msys\msys64\mingw64\lib\"
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
