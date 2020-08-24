@@ -20,14 +20,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
+      - uses: msys2/setup-msys2@v2
+        name: Setup Msys
+        with:
+          install: git python p7zip mingw-w64-x86_64-cairo
+          update: true
+      - shell: msys2 {0}
+        run: |
+          mkdir cairocomplied/include
+          cp -r "/mingw64/include/cairo/" "cairocomplied/include/"
       - name: Download and extract Cairo Binary
         run: |
           curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item 'cairo-windows-*\lib' "cairocomplied"
-          curl -u naveen521kk:$($TOKENACCESS) -L https://github.com/naveen521kk/pycairo/suites/1089127371/artifacts/15079510 -o cairoartifact.zip
-          7z x cairoartifact.zip -o"build_artifact"
-          Move-Item "build_artifact\cairo\" "cairocomplied\include"
       - name: Build x64 Build
         run: |
           $env:INCLUDE="$PWD\cairocomplied\include\"
