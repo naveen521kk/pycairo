@@ -24,6 +24,8 @@ jobs:
       - shell: msys2 {0}
         run: |
           ls /mingw64/bin
+          mkdir lib
+          mkdir include
           cp "/mingw64/bin/libcairo-2.dll" "lib/cairo.dll"
           cp "/mingw64/include/" "include/"
           cp "/mingw64/lib/" "lib/"
