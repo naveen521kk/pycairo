@@ -23,6 +23,13 @@ jobs:
           update: true
       - shell: msys2 {0}
         run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade wheel
+          python -m pip install --upgrade setuptools
+          python -m pip install --upgrade pytest
+          python setup.py install
+          python setup.py bdist_wheel
+          pytest
           ls /mingw64/bin
           mkdir lib
           mkdir include
