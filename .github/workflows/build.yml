@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download and extract Cairo Binary
         run: |
+          mkdir "cairocomplied"
           cd "cairocomplied" && mkdir "include" && cd ../
           curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
