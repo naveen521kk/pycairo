@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build wheels for Windows on ${{ matrix.python-version }}
     runs-on: windows-latest
     env:
       CAIRO_VERSION: "1.17.2"
