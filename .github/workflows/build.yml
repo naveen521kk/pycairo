@@ -20,11 +20,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Test path
         run: |
-          curl https://github.com/preshing/cairo-windows/releases/download/$CAIRO_VERSION/cairo-windows-$CAIRO_VERSION.zip -o cairocomplied.zip
+          curl -L https://github.com/preshing/cairo-windows/releases/download/$CAIRO_VERSION/cairo-windows-$CAIRO_VERSION.zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item "cairo-windows-*\" "cairocomplied\"
-          $env:INCLUDE="$PWD/cairocomplied/include/"
-          $env:LIB="$PWD/cairocomplied/lib/x64/"
+          $env:INCLUDE="$PWD\cairocomplied\include\"
+          $env:LIB="$PWD\cairocomplied\lib\x64\"
           Copy-Item cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
           #$env:LIB="D:\a\_temp\msys\msys64\mingw64\lib\"
           python -m pip install --upgrade pip
