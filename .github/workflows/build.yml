@@ -17,6 +17,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download and extract Cairo Binary
         run: |
+          cd "cairocomplied" && mkdir "include" && cd ../
           curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item 'cairo-windows-*\lib' "cairocomplied"
@@ -34,8 +35,6 @@ jobs:
           update: true
       - shell: msys2 {0}
         run: |
-          mkdir "cairocomplied"
-          cd "cairocomplied" && mkdir "include" && cd ../
           mv "/mingw64/include/cairo/" "cairocomplied/include/"
           mv "/mingw64/lib/pkgconfig/*" "cairocomplied/include/cairo"
           cp "$PWD/cairocomplied/lib/x64/cairo.dll" "cairo/cairo.dll"
@@ -44,6 +43,7 @@ jobs:
           
       - name: Build x64 Build
         run: |
+          tree
           $env:INCLUDE="$PWD\cairocomplied\include\cairo\"
           $env:LIB="$PWD\cairocomplied\lib\x64\"
           Copy-Item "$PWD\cairocomplied\lib\x64\cairo.dll" "cairo\cairo.dll"
