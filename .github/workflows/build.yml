@@ -23,11 +23,12 @@ jobs:
       - uses: msys2/setup-msys2@v2
         name: Setup Msys
         with:
-          install: git python p7zip mingw-w64-x86_64-cairo
+          install: git mingw-w64-x86_64-cairo
           update: true
       - shell: msys2 {0}
         run: |
-          mkdir cairocomplied/include
+          mkdir "cairocomplied"
+          cd "cairocomplied" && mkdir "include" && cd ../
           cp -r "/mingw64/include/cairo/" "cairocomplied/include/"
       - name: Download and extract Cairo Binary
         run: |
