@@ -18,10 +18,10 @@ jobs:
         run: |
           curl https://github.com/preshing/cairo-windows/releases/download/$CAIRO_VERSION/cairo-windows-$CAIRO_VERSION.zip -o cairocomplied.zip
           7z x cairocomplied.zip
-          move "cairo-windows-*\" "cairocomplied\"
+          Move-Item "cairo-windows-*\" "cairocomplied\"
           $env:INCLUDE="$PWD/cairocomplied/include/"
           $env:LIB="$PWD/cairocomplied/lib/x64/"
-          cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
+          Copy-Item cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
           #$env:LIB="D:\a\_temp\msys\msys64\mingw64\lib\"
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
