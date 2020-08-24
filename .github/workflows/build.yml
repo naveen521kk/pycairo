@@ -20,7 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Test path
         run: |
-          curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$$($env:CAIRO_VERSION).zip -o cairocomplied.zip
+          curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item "cairo-windows-*\" "cairocomplied\"
           $env:INCLUDE="$PWD\cairocomplied\include\"
