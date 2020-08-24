@@ -59,7 +59,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
-          python -m pip install pytest
+          python -m pip install --upgrade pytest flake8 "sphinx<3" sphinx_rtd_theme coverage codecov hypothesis attrs
           python -m pip install --upgrade mypy || true
           python -m pip install --upgrade pygame
           python -m coverage run --branch setup.py test
@@ -75,5 +75,5 @@ jobs:
           python -m sphinx -W -a -E -b html -n docs docs/_build
       - uses: actions/upload-artifact@v2
         with:
-         name: wheels
-         path: dist/*
+         name: wheels-${{ matrix.python-version }}
+         path: dist/pycairo*.whl
