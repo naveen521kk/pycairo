@@ -32,9 +32,18 @@ jobs:
           cp "/mingw64/lib/libcairo-script-interpreter.dll.a" "lib/"
           cp "/mingw64/lib/libcairo.a" "lib/"
           cp "/mingw64/lib/libcairo.dll.a" "lib/"
+          cmd.exe /C "where libcairo-2.dll"
       - name: Test path
         run: |
           dir
+          $env:INCLUDE="$($PWD)\include\"
+          $env:INCLUDE="$($PWD)\lib\"
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade wheel
+          python -m pip install --upgrade setuptools
+          python setup.py install
+          python setup.py bdist_wheel
+          pytest
       - uses: actions/upload-artifact@v2
         with:
          name: cairo
