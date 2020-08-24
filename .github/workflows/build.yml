@@ -24,7 +24,17 @@ jobs:
       - shell: msys2 {0}
         run: |
           ls /mingw64/bin
-          cp "/mingw64/bin/libcairo-2.dll" cairo.dll
+          cp "/mingw64/bin/libcairo-2.dll" "lib/cairo.dll"
+          cp "/mingw64/include/" "include/"
+          cp "/mingw64/lib/" "lib/"
       - name: Test path
         run: |
           dir
+      - uses: actions/upload-artifact@v2
+        with:
+         name: cairo
+         path: include/*
+      - uses: actions/upload-artifact@v2
+        with:
+         name: cairo
+         path: lib/*
