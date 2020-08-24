@@ -26,9 +26,9 @@ jobs:
           ls /mingw64/bin
           mkdir lib
           mkdir include
-          cp "/mingw64/bin/libcairo-2.dll" "lib/cairo.dll"
-          cp "/mingw64/include/" "include/"
-          cp "/mingw64/lib/" "lib/"
+          cp -r "/mingw64/bin/libcairo-2.dll" "lib/cairo.dll"
+          cp -r "/mingw64/include/" "include/"
+          cp -r "/mingw64/lib/" "lib/"
       - name: Test path
         run: |
           dir
