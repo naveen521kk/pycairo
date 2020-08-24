@@ -5,49 +5,24 @@ on: [push]
 jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
+    runs-on: windows-latest
+    env:
+     CAIRO_VERSION:1.17.2
     steps:
       - uses: actions/checkout@v2
-
       - uses: actions/setup-python@v2
         name: Install Python
         with:
-          python-version: '3.7'
-      - uses: msys2/setup-msys2@v2
-        name: Setup Msys
-        with:
-          install: git python3 p7zip python3-pip mingw-w64-x86_64-cairo
-          update: true
-      - shell: msys2 {0}
-        run: |
-          curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-          python get-pip.py
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade wheel
-          python -m pip install --upgrade setuptools
-          python -m pip install --upgrade pytest
-          python setup.py install
-          python setup.py bdist_wheel
-          pytest
-          ls /mingw64/bin
-          mkdir lib
-          mkdir include
-          cp "/mingw64/bin/libcairo-2.dll" "lib/cairo.dll"
-          cp -r "/mingw64/include/" "include/"
-          cp -r "/mingw64/lib/" "lib/"
-          cp "/mingw64/lib/libcairo-script-interpreter.a" "lib/"
-          cp "/mingw64/lib/libcairo-script-interpreter.dll.a" "lib/"
-          cp "/mingw64/lib/libcairo.a" "lib/"
-          cp "/mingw64/lib/libcairo.dll.a" "lib/"
-          cmd.exe /C "where libcairo-2.dll"
+          python-version: [3.6,3.7,3.8,3.9]
       - name: Test path
         run: |
-          dir
-          $env:INCLUDE="D:\a\_temp\msys\msys64\mingw64\include\cairo"
-          $env:LIB="D:\a\_temp\msys\msys64\mingw64\lib\"
+          curl https://github.com/preshing/cairo-windows/releases/download/$CAIRO_VERSION/cairo-windows-$CAIRO_VERSION.zip -o cairocomplied.zip
+          7z x cairocomplied.zip
+          move "cairo-windows-*\" "cairocomplied\"
+          $env:INCLUDE="$PWD/cairocomplied/include/"
+          $env:LIB="$PWD/cairocomplied/lib/x64/"
+          cp cairocomplied/lib/x64/cairo.dll cairo/cairo.dll
+          #$env:LIB="D:\a\_temp\msys\msys64\mingw64\lib\"
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
@@ -55,14 +30,6 @@ jobs:
           python setup.py install
           python setup.py bdist_wheel
           pytest
-      - uses: actions/upload-artifact@v2
-        with:
-         name: cairo
-         path: include/*
-      - uses: actions/upload-artifact@v2
-        with:
-         name: cairo1
-         path: lib/*
       - uses: actions/upload-artifact@v2
         with:
          name: wheels
