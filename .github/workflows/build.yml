@@ -19,10 +19,12 @@ jobs:
       - uses: msys2/setup-msys2@v2
         name: Setup Msys
         with:
-          install: git python p7zip python-pip mingw-w64-x86_64-cairo
+          install: git python3 p7zip python3-pip mingw-w64-x86_64-cairo
           update: true
       - shell: msys2 {0}
         run: |
+          curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+          python get-pip.py
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
