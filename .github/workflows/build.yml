@@ -35,12 +35,13 @@ jobs:
           curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item 'cairo-windows-*\lib' "cairocomplied"
+          Move-Item 'cairocomplied\include\cairo' "cairocomplied\include\"
           tree
       - name: Build x64 Build
         run: |
           $env:INCLUDE="$PWD\cairocomplied\include\"
-          $env:LIB="$PWD\cairocomplied\x64\"
-          Copy-Item "$PWD\cairocomplied\x64\cairo.dll" "cairo\cairo.dll"
+          $env:LIB="$PWD\cairocomplied\lib\x64\"
+          Copy-Item "$PWD\cairocomplied\lib\x64\cairo.dll" "cairo\cairo.dll"
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
@@ -66,8 +67,8 @@ jobs:
       - name: Build x64 Build
         run: |
           $env:INCLUDE="$PWD\cairocomplied\include\"
-          $env:LIB="$PWD\cairocomplied\x86\"
-          Copy-Item "cairocomplied\x86\cairo.dll" "cairo\cairo.dll"
+          $env:LIB="$PWD\cairocomplied\lib\x86\"
+          Copy-Item "cairocomplied\lib\x86\cairo.dll" "cairo\cairo.dll"
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
