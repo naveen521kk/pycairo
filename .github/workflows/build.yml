@@ -7,7 +7,7 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: windows-latest
     env:
-     CAIRO_VERSION:1.17.2
+      CAIRO_VERSION: "1.17.2"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
