@@ -35,7 +35,7 @@ jobs:
           curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item 'cairo-windows-*\lib' "cairocomplied"
-          Move-Item 'cairocomplied\include\cairo' "cairocomplied\include\"
+          #Move-Item 'cairocomplied\include\cairo\*' "cairocomplied\include"
           tree
       - name: Build x64 Build
         run: |
