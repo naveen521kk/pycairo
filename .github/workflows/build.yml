@@ -23,10 +23,8 @@ jobs:
           update: true
       - shell: msys2 {0}
         run: |
-          ls /mingw64/bin/libcairo-2.dll
-          $cairoloc=which "libcairo-2.dll"
-          cp $cairoloc cairo.dll
-          echo "::set-env name=INCLUDE::$INCLUDE"
+          ls /mingw64/bin
+          cp "/mingw64/bin/libcairo-2.dll" cairo.dll
       - name: Test path
         run: |
           dir
