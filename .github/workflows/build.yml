@@ -27,7 +27,8 @@ jobs:
           mkdir lib
           mkdir include
           cp "/mingw64/bin/libcairo-2.dll" "lib/cairo.dll"
-          cp -r "/mingw64/include/cairo/" "include/"
+          cp -r "/mingw64/include/" "include/"
+          cp -r "/mingw64/lib/" "lib/"
           cp "/mingw64/lib/libcairo-script-interpreter.a" "lib/"
           cp "/mingw64/lib/libcairo-script-interpreter.dll.a" "lib/"
           cp "/mingw64/lib/libcairo.a" "lib/"
@@ -41,6 +42,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel
           python -m pip install --upgrade setuptools
+          python -m pip install --upgrade pytest
           python setup.py install
           python setup.py bdist_wheel
           pytest
@@ -50,5 +52,9 @@ jobs:
          path: include/*
       - uses: actions/upload-artifact@v2
         with:
-         name: cairo
+         name: cairo1
          path: lib/*
+      - uses: actions/upload-artifact@v2
+        with:
+         name: wheels
+         path: dist/*
