@@ -23,17 +23,10 @@ jobs:
           update: true
       - shell: msys2 {0}
         run: |
-          echo "This is path Variable"
-          echo $PATH
-          echo "This is INCLUDE Variable"
-          echo $INCLUDE
-          echo "This is LIB Variable"
-          echo $LIB
           ls /mingw64/bin/libcairo-2.dll
-          which "libcairo-2.dll"
-          echo "::set-env name=PATH::$PATH"
-          echo "::set-env name=LIB::$LIB"
+          $cairoloc = which "libcairo-2.dll"
+          cp $cairoloc cairo.dll
           echo "::set-env name=INCLUDE::$INCLUDE"
       - name: Test path
         run: |
-          echo $PATH
+          dir
