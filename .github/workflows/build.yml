@@ -39,7 +39,7 @@ jobs:
           tree
       - name: Build x64 Build
         run: |
-          $env:INCLUDE="$PWD\cairocomplied\include\"
+          $env:INCLUDE="$PWD\cairocomplied\include\cairo\"
           $env:LIB="$PWD\cairocomplied\lib\x64\"
           Copy-Item "$PWD\cairocomplied\lib\x64\cairo.dll" "cairo\cairo.dll"
           python -m pip install --upgrade pip
@@ -66,7 +66,7 @@ jobs:
           architecture: 'x86'
       - name: Build x64 Build
         run: |
-          $env:INCLUDE="$PWD\cairocomplied\include\"
+          $env:INCLUDE="$PWD\cairocomplied\include\cairo\"
           $env:LIB="$PWD\cairocomplied\lib\x86\"
           Copy-Item "cairocomplied\lib\x86\cairo.dll" "cairo\cairo.dll"
           python -m pip install --upgrade pip
