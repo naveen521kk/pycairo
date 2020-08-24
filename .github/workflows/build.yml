@@ -8,6 +8,7 @@ jobs:
     runs-on: windows-latest
     env:
       CAIRO_VERSION: "1.17.2"
+      TOKENACCESS: ${{ secrets.GITHUB_TOKEN }} 
     strategy:
       matrix:
         python-version: [3.5, 3.6, 3.7, 3.8]
@@ -24,7 +25,7 @@ jobs:
           curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item 'cairo-windows-*\lib' "cairocomplied"
-          curl -A "pwsh" -L https://github.com/naveen521kk/pycairo/suites/1089127371/artifacts/15079510 -o cairoartifact.zip
+          curl -u naveen521kk:$($TOKENACCESS) -L https://github.com/naveen521kk/pycairo/suites/1089127371/artifacts/15079510 -o cairoartifact.zip
           7z x cairoartifact.zip -o"build_artifact"
           Move-Item "build_artifact\cairo\" "cairocomplied\include"
       - name: Build x64 Build
