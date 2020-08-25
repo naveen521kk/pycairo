@@ -11,7 +11,7 @@ jobs:
       TOKENACCESS: ${{ secrets.GITHUB_TOKEN }} 
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.8]
 
     steps:
       - uses: actions/checkout@v2
@@ -38,7 +38,12 @@ jobs:
            dir "build\src"
            cd "build"
            cd "src"
+           cd ..\..\
            dir
+           meson build && cd build
+           meson compile
+           tree
+           
       - uses: actions/upload-artifact@v2
         with:
          name: wheels-${{ matrix.python-version }}
