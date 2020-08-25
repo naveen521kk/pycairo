@@ -30,9 +30,11 @@ jobs:
            git clone https://gitlab.freedesktop.org/cairo/cairo.git
            meson cairo && cd cairo
            meson compile
+           tree
            meson test
            meson build 
+           tree
       - uses: actions/upload-artifact@v2
         with:
          name: wheels-${{ matrix.python-version }}
-         path: build/
+         path: trymeson/cairo/build/
