@@ -3,8 +3,8 @@ name: Build
 on: [push]
 
 jobs:
-  build_wheels:
-    name: Build wheels for Windows on ${{ matrix.python-version }}
+  build_cairo:
+    name: Build cairo for Windows
     runs-on: windows-latest
     env:
       CAIRO_VERSION: "1.17.2"
@@ -22,28 +22,22 @@ jobs:
           architecture: 'x64'
       - name: Build x64 Build
         run: |
-           tree
-           choco install ninja
-           pip install meson
-           mkdir "trymeson"
-           cd "trymeson"
-           git clone https://gitlab.freedesktop.org/cairo/cairo.git
-           meson cairo && cd cairo
-           meson compile
-           tree
-           dir "src"
-           meson test
-           meson build 
-           tree
-           dir "build\src"
-           cd "build"
-           cd "src"
-           dir
-           cd ..\..\
-           meson build && cd build
-           meson compile
-           tree
-           dir "build"
+           curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
+           (New-Object System.Net.WebClient).DownloadFile('https://github.com/msys2/msys2-installer/releases/download/2020-06-29/msys2-base-x86_64-20200629.sfx.exe', 'msys2.exe')
+           .\msys2.exe -y -oC:\  # Extract to C:\msys64
+           Remove-Item msys2.exe  # Delete the archive again
+           C:\msys64\usr\bin\bash -lc ' '
+           # Update MSYS2
+           C:\msys64\usr\bin\bash -lc 'pacman -Syuu'  # Core update (in case any core packages are outdated)
+           C:\msys64\usr\bin\bash -lc 'pacman -Syuu'  # Normal update
+           $env:CHERE_INVOKING = 'yes'
+           $env:MSYSTEM = 'MINGW64'
+           C:\msys64\usr\bin\bash -lc 'pacman -S tar make'
+           set PATH=C:\msys64;%PATH%
+           msys2_shell.cmd -use-full-path
+           unset TMP
+           unset TEMP
+           ./build-cairo-windows.sh
       - uses: actions/upload-artifact@v2
         with:
          name: wheels-${{ matrix.python-version }}
