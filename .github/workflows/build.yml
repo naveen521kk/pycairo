@@ -32,14 +32,15 @@ jobs:
       - uses: msys2/setup-msys2@v2
         name: Setup Msys
         with:
-          install: git python3-pip mingw-w64-x86_64-cairo mingw-w64-x86_64-python-cairo mingw-w64-x86_64-python mingw-w64-x86_64-python-pytest
+          install: git python3-pip mingw-w64-x86_64-cairo mingw-w64-x86_64-python-cairo tar make
           update: true
           path-type: inherit
       - shell: msys2 {0}
         run: |
-          py setup.py bdist_wheel
-          pip3 wheel .
-          which python
+          unset TMP
+          unset TEMP
+          curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
+          ./build-cairo-windows.sh
           
           
       - name: Build x64 Build
