@@ -34,10 +34,12 @@ jobs:
         with:
           install: git python3-pip mingw-w64-x86_64-cairo mingw-w64-x86_64-python-cairo mingw-w64-x86_64-python mingw-w64-x86_64-python-pytest
           update: true
+          path-type: inherit
       - shell: msys2 {0}
         run: |
-          python setup.py install
+          py setup.py bdist_wheel
           pip3 wheel .
+          which python
           
           
       - name: Build x64 Build
