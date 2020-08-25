@@ -31,10 +31,15 @@ jobs:
            meson cairo && cd cairo
            meson compile
            tree
+           dir "src"
            meson test
            meson build 
            tree
+           dir "build\src"
+           cd "build"
+           cd "src"
+           dir
       - uses: actions/upload-artifact@v2
         with:
          name: wheels-${{ matrix.python-version }}
-         path: trymeson/cairo/build/
+         path: trymeson/cairo/build/src
