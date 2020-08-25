@@ -25,6 +25,8 @@ jobs:
            tree
            choco install ninja
            pip install meson
+           mkdir "trymeson"
+           cd "trymeson"
            git clone https://gitlab.freedesktop.org/cairo/cairo.git
            meson cairo && cd cairo
            meson compile
