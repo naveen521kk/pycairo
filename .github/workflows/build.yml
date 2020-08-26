@@ -24,7 +24,6 @@ jobs:
         with:
           msystem: MINGW64
           update: true
-          path-type: inherit
           install: git mingw-w64-x86_64-toolchain make
       - name: Download Dependency
         run: |
@@ -62,12 +61,16 @@ jobs:
            7z x "$($ZLIB_VERSION).tar.gz"
            7z x "$($ZLIB_VERSION).tar"
            move "$($ZLIB_VERSION)" "zlib"
+           dir "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\Common7\Tools"
+           echo $env:PATH
+           cmd.exe /C "where devenv.com"
       - name: Build x64 Build
         shell: msys2 {0}
         run: |
            cd cairocompiled
            unset TMP
            unset TEMP
+           export PATH = "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.26.28801/bin/HostX86/x64:$PATH"
            curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
            ./build-cairo-windows.sh
            #C:\msys64\usr\bin\bash -lc './build-cairo-windows.sh'
