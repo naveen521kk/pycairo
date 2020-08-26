@@ -29,10 +29,11 @@ jobs:
       - name: Download Dependency
         run: |
            curl -L https://eternallybored.org/misc/wget/releases/wget-1.20.3-win64.zip -o wget.zip
-           7z x wget.zip -o wget
+           7z x wget.zip -owget
            cd wget*
-           move "wget*" "..\"
-           $env:PATH = "$($PWD);$env:PATH"
+           move "wget*" "..\wget"
+           cd ../
+           $env:PATH = "$($PWD)\wget;$env:PATH"
            $USE_FREETYPE=1
            $CAIRO_VERSION="cairo-1.17.2"
            $PIXMAN_VERSION="pixman-0.40.0"
