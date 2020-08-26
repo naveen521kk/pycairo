@@ -28,8 +28,8 @@ jobs:
            Remove-Item msys2.exe  # Delete the archive again
            C:\msys64\usr\bin\bash -lc ' '
            # Update MSYS2
-           C:\msys64\usr\bin\bash -lc 'pacman -Syuu'  # Core update (in case any core packages are outdated)
-           C:\msys64\usr\bin\bash -lc 'pacman -Syuu'  # Normal update
+           C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # Core update (in case any core packages are outdated)
+           C:\msys64\usr\bin\bash -lc 'pacman --noconfirm -Syuu'  # Normal update
            $env:CHERE_INVOKING = 'yes'
            $env:MSYSTEM = 'MINGW64'
            C:\msys64\usr\bin\bash -lc 'pacman -S tar make'
@@ -38,6 +38,7 @@ jobs:
            unset TMP
            unset TEMP
            ./build-cairo-windows.sh
+           C:\msys64\usr\bin\bash -lc './build-cairo-windows.sh'
       - uses: actions/upload-artifact@v2
         with:
          name: wheels-${{ matrix.python-version }}
