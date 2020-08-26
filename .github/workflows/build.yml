@@ -28,6 +28,7 @@ jobs:
           install: git mingw-w64-x86_64-toolchain make
       - name: Download Dependency
         run: |
+           choco install wget
            $USE_FREETYPE=1
            $CAIRO_VERSION="cairo-1.17.2"
            $PIXMAN_VERSION="pixman-0.40.0"
