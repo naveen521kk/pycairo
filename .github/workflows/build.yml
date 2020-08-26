@@ -34,6 +34,7 @@ jobs:
            move "wget*" "..\wget"
            cd ../
            $env:PATH = "$($PWD)\wget;$env:PATH"
+           mkdir cairocompiled
            cd cairocompiled
            $USE_FREETYPE=1
            $CAIRO_VERSION="cairo-1.17.2"
