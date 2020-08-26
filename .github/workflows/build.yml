@@ -65,13 +65,15 @@ jobs:
            echo $env:PATH
            cmd.exe /C "where devenv.com"
            cmd.exe /C "where cl.exe"
+           dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE"
+           tree "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
       - name: Build x64 Build
         shell: msys2 {0}
         run: |
            cd cairocompiled
            unset TMP
            unset TEMP
-           export PATH = "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.26.28801/bin/HostX86/x64:$PATH"
+           export PATH = "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Common/IDE:/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Common/Tools:$PATH"
            curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
            ./build-cairo-windows.sh
            #C:\msys64\usr\bin\bash -lc './build-cairo-windows.sh'
