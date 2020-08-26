@@ -31,6 +31,7 @@ jobs:
         run: |
            unset TMP
            unset TEMP
+           curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
            ./build-cairo-windows.sh
            #C:\msys64\usr\bin\bash -lc './build-cairo-windows.sh'
       - uses: actions/upload-artifact@v2
