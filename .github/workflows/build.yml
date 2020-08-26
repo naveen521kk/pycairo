@@ -29,26 +29,26 @@ jobs:
       - name: Download Dependency
         run: |
            $USE_FREETYPE=1
-           $CAIRO_VERSION=cairo-1.17.2
-           $PIXMAN_VERSION=pixman-0.40.0
-           $LIBPNG_VERSION=libpng-1.6.37
-           $ZLIB_VERSION=zlib-1.2.11
-           $FREETYPE_VERSION=freetype-2.10.2
-           wget -nc https://www.cairographics.org/snapshots/$($CAIRO_VERSION).tar.xz
-           wget -nc https://www.cairographics.org/releases/$($PIXMAN_VERSION.tar).gz
-           wget -nc https://download.sourceforge.net/libpng/$($LIBPNG_VERSION.tar).gz
-           wget -nc http://www.zlib.net/$($ZLIB_VERSION).tar.gz
-           wget -nc http://download.savannah.gnu.org/releases/freetype/$($FREETYPE_VERSION).tar.gz
-           tar -xJf $($CAIRO_VERSION).tar.xz
-           move $($CAIRO_VERSION) cairo
-           tar -xzf $($PIXMAN_VERSION).tar.gz
-           move $($PIXMAN_VERSION) pixman
-           tar -xzf $($LIBPNG_VERSION).tar.gz
-           move $($LIBPNG_VERSION) libpng
-           tar -xzf $($FREETYPE_VERSION).tar.gz
-           move $($FREETYPE_VERSION) freetype
-           tar -xzf $($ZLIB_VERSION).tar.gz
-           move $($ZLIB_VERSION) zlib
+           $CAIRO_VERSION="cairo-1.17.2"
+           $PIXMAN_VERSION="pixman-0.40.0"
+           $LIBPNG_VERSION="libpng-1.6.37"
+           $ZLIB_VERSION="zlib-1.2.11"
+           $FREETYPE_VERSION="freetype-2.10.2"
+           wget -nc "https://www.cairographics.org/snapshots/$($CAIRO_VERSION).tar.xz"
+           wget -nc "https://www.cairographics.org/releases/$($PIXMAN_VERSION.tar).gz"
+           wget -nc "https://download.sourceforge.net/libpng/$($LIBPNG_VERSION.tar).gz"
+           wget -nc "http://www.zlib.net/$($ZLIB_VERSION).tar.gz"
+           wget -nc "http://download.savannah.gnu.org/releases/freetype/$($FREETYPE_VERSION).tar.gz"
+           tar -xJf "$($CAIRO_VERSION).tar.xz"
+           move "$($CAIRO_VERSION)" "cairo"
+           tar -xzf "$($PIXMAN_VERSION).tar.gz"
+           move "$($PIXMAN_VERSION)" "pixman"
+           tar -xzf "$($LIBPNG_VERSION).tar.gz"
+           move "$($LIBPNG_VERSION)" "libpng"
+           tar -xzf "$($FREETYPE_VERSION).tar.gz"
+           move "$($FREETYPE_VERSION)" "freetype"
+           tar -xzf "$($ZLIB_VERSION).tar.gz"
+           move "$($ZLIB_VERSION)" "zlib"
       - name: Build x64 Build
         shell: msys2 {0}
         run: |
