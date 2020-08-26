@@ -34,30 +34,37 @@ jobs:
            move "wget*" "..\wget"
            cd ../
            $env:PATH = "$($PWD)\wget;$env:PATH"
+           cd cairocompiled
            $USE_FREETYPE=1
            $CAIRO_VERSION="cairo-1.17.2"
            $PIXMAN_VERSION="pixman-0.40.0"
            $LIBPNG_VERSION="libpng-1.6.37"
            $ZLIB_VERSION="zlib-1.2.11"
            $FREETYPE_VERSION="freetype-2.10.2"
-           wget -nc "https://www.cairographics.org/snapshots/$($CAIRO_VERSION).tar.xz"
-           wget -nc "https://www.cairographics.org/releases/$($PIXMAN_VERSION).tar.gz"
-           wget -nc "https://download.sourceforge.net/libpng/$($LIBPNG_VERSION).tar.gz"
-           wget -nc "http://www.zlib.net/$($ZLIB_VERSION).tar.gz"
-           wget -nc "http://download.savannah.gnu.org/releases/freetype/$($FREETYPE_VERSION).tar.gz"
-           tar -xJf "$($CAIRO_VERSION).tar.xz"
+           wget -q --no-check-certificate -nc "https://www.cairographics.org/snapshots/$($CAIRO_VERSION).tar.xz"
+           wget -q --no-check-certificate -nc "https://www.cairographics.org/releases/$($PIXMAN_VERSION).tar.gz"
+           wget -q --no-check-certificate -nc "https://download.sourceforge.net/libpng/$($LIBPNG_VERSION).tar.gz"
+           wget -q --no-check-certificate -nc "http://www.zlib.net/$($ZLIB_VERSION).tar.gz"
+           wget -q --no-check-certificate -nc "http://download.savannah.gnu.org/releases/freetype/$($FREETYPE_VERSION).tar.gz"
+           7z x "$($CAIRO_VERSION).tar.xz"
+           7z x "$($CAIRO_VERSION).tar"
            move "$($CAIRO_VERSION)" "cairo"
-           tar -xzf "$($PIXMAN_VERSION).tar.gz"
+           7z x "$($PIXMAN_VERSION).tar.gz"
+           7z x "$($PIXMAN_VERSION).tar"
            move "$($PIXMAN_VERSION)" "pixman"
-           tar -xzf "$($LIBPNG_VERSION).tar.gz"
+           7z x "$($LIBPNG_VERSION).tar.gz"
+           7z x "$($LIBPNG_VERSION).tar"
            move "$($LIBPNG_VERSION)" "libpng"
-           tar -xzf "$($FREETYPE_VERSION).tar.gz"
+           7z x "$($FREETYPE_VERSION).tar.gz"
+           7z x "$($FREETYPE_VERSION).tar"
            move "$($FREETYPE_VERSION)" "freetype"
-           tar -xzf "$($ZLIB_VERSION).tar.gz"
+           7z x "$($ZLIB_VERSION).tar.gz"
+           7z x "$($ZLIB_VERSION).tar"
            move "$($ZLIB_VERSION)" "zlib"
       - name: Build x64 Build
         shell: msys2 {0}
         run: |
+           cd cairocompiled
            unset TMP
            unset TEMP
            curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
