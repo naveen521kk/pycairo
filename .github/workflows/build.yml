@@ -33,7 +33,7 @@ jobs:
            $env:CHERE_INVOKING = 'yes'
            $env:MSYSTEM = 'MINGW64'
            C:\msys64\usr\bin\bash -lc 'pacman -S tar make'
-           set PATH=C:\msys64;%PATH%
+           $env:PATH=C:\msys64;$env:PATH
            msys2_shell.cmd -use-full-path
            unset TMP
            unset TEMP
