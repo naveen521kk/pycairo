@@ -63,9 +63,9 @@ jobs:
            move "$($ZLIB_VERSION)" "zlib"
            #dir "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Enterprise\Common7\Tools"
            echo $env:PATH
-           cmd.exe /C "where devenv.com"
-           cmd.exe /C "where cl.exe"
-           dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE"
+           #cmd.exe /C "where devenv.com"
+           #cmd.exe /C "where cl.exe"
+           #dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE"
            tree "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
       - name: Build x64 Build
         shell: msys2 {0}
