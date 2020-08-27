@@ -66,7 +66,7 @@ jobs:
            #cmd.exe /C "where devenv.com"
            #cmd.exe /C "where cl.exe"
            #dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE"
-           tree "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+           #tree "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
       - name: Build x64 Build
         shell: msys2 {0}
         run: |
