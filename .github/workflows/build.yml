@@ -50,14 +50,14 @@ jobs:
           python setup.py install --root=_root_setup
           python -m pip install .
           python -m sphinx -W -a -E -b html -n docs docs/_build
-      - name: Set up Python ${{ matrix.python-version }} for x64
+      - name: Set up Python ${{ matrix.python-version }} for x86
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x86'
-      - name: Build x64 Build
+      - name: Build x86 Build
         run: |
-          $env:INCLUDE="$PWD\cairocomplied\include\cairo\"
+          $env:INCLUDE="$PWD\cairocomplied\include\"
           $env:LIB="$PWD\cairocomplied\lib\x86\"
           Copy-Item "cairocomplied\lib\x86\cairo.dll" "cairo\cairo.dll"
           python -m pip install --upgrade pip
