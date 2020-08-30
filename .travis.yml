@@ -72,6 +72,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python setup.py install --root=_root_setup; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then if [[ "${TRAVIS_PYTHON_VERSION:0:4}" != "pypy" ]] ; then python -m pip install .; fi; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then python -m sphinx -W -a -E -b html -n docs docs/_build; fi
+  - python setup.py test
 
 cache:
   directories:
