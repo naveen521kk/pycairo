@@ -76,7 +76,7 @@ install:
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then curl -sS -L https://aka.ms/nugetclidl -o $TMP/nuget.exe; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then curl -sS -L https://github.com/preshing/cairo-windows/releases/download/with-tee/cairo-windows-$CAIRO_VERSION.zip -o $TMP/cairo-windows-$CAIRO_VERSION.zip; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then 7z x $TMP/cairo-windows-$CAIRO_VERSION.zip -o$TMP; fi
-  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then mv cairo-windows-$CAIRO_VERSION cairocomplied; fi
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then mv cairo-windows-* cairocomplied; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then $TMP/nuget install python -Version $PYTHON_VERSION -OutputDirectory $TMP/nuget-$ARCH; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export INCLUDE="$TMP/cairocomplied/include/"; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ]; then export LIB="$TMP/cairocomplied/lib/$ARCH/"; fi
