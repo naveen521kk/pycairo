@@ -4,32 +4,32 @@ matrix:
       language: sh
       python: 3.6
       name: Build on x64 Python 3.6.8 in Windows
-      env: ARCH=x64 CAIRO_VERSION=with-tee PYTHON_PACKAGE=python PYTHON_VERSION="3.6.8"
+      env: ARCH=x64 CAIRO_VERSION="1,17,2" PYTHON_PACKAGE=python PYTHON_VERSION="3.6.8"
     - os: windows
       language: sh
       python: 3.7
       name: Build on x64 Python 3.7.7 in Windows
-      env: ARCH=x64 CAIRO_VERSION=with-tee PYTHON_PACKAGE=python PYTHON_VERSION="3.7.7" 
+      env: ARCH=x64 CAIRO_VERSION="1,17,2" PYTHON_PACKAGE=python PYTHON_VERSION="3.7.7" 
     - os: windows
       language: sh
       python: 3.8
       name: Build on x64 Python 3.8.3 in Windows
-      env: ARCH=x64 CAIRO_VERSION=with-tee PYTHON_PACKAGE=python PYTHON_VERSION="3.8.3"
+      env: ARCH=x64 CAIRO_VERSION="1,17,2" PYTHON_PACKAGE=python PYTHON_VERSION="3.8.3"
     - os: windows
       language: sh
       python: 3.6
       name: Build on x86 Python 3.6.8 in Windows
-      env: ARCH=x86 CAIRO_VERSION=with-tee PYTHON_PACKAGE=pythonx86 PYTHON_VERSION="3.6.8"
+      env: ARCH=x86 CAIRO_VERSION="1,17,2" PYTHON_PACKAGE=pythonx86 PYTHON_VERSION="3.6.8"
     - os: windows
       language: sh
       python: 3.7
       name: Build on x86 Python 3.7.7 in Windows
-      env: ARCH=x86 CAIRO_VERSION=with-tee PYTHON_PACKAGE=pythonx86 PYTHON_VERSION="3.7.7" 
+      env: ARCH=x86 CAIRO_VERSION="1,17,2" PYTHON_PACKAGE=pythonx86 PYTHON_VERSION="3.7.7" 
     - os: windows
       language: sh
       python: 3.8
       name: Build on x86 Python 3.8.3 in Windows
-      env: ARCH=x86 CAIRO_VERSION=with-tee PYTHON_PACKAGE=pythonx86 PYTHON_VERSION="3.8.3" 
+      env: ARCH=x86 CAIRO_VERSION="1,17,2" PYTHON_PACKAGE=pythonx86 PYTHON_VERSION="3.8.3" 
     - os: linux
       dist: trusty
       language: python
