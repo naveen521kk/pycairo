@@ -17,9 +17,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download and extract Cairo Binary
         run: |
-          mkdir "cairocomplied"
-          cd "cairocomplied" && mkdir "include" && cd ../
-          curl -L https://github.com/preshing/cairo-windows/releases/download/$($env:CAIRO_VERSION)/cairo-windows-$($env:CAIRO_VERSION).zip -o cairocomplied.zip
+          
+          curl -L https://github.com/preshing/cairo-windows/releases/download/with-tee/cairo-windows-1.17.2.zip -o cairocomplied.zip
           7z x cairocomplied.zip
           Move-Item 'cairo-windows-*' "cairocomplied"
           #Move-Item 'cairocomplied\include\cairo\*' "cairocomplied\include"
@@ -29,24 +28,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
-      - uses: msys2/setup-msys2@v2
-        name: Setup Msys
-        with:
-          install: git python3-pip mingw-w64-x86_64-cairo mingw-w64-x86_64-python-cairo tar make
-          update: true
-          path-type: inherit
-      - shell: msys2 {0}
-        run: |
-          py setup.py install
-          unset TMP
-          unset TEMP
-          curl -L https://github.com/preshing/cairo-windows/raw/master/build-cairo-windows.sh -o build-cairo-windows.sh
-          ./build-cairo-windows.sh
-          
-          
       - name: Build x64 Build
         run: |
-          tree
           $env:INCLUDE="$PWD\cairocomplied\include\"
           $env:LIB="$PWD\cairocomplied\lib\x64\"
           Copy-Item "$PWD\cairocomplied\lib\x64\cairo.dll" "cairo\cairo.dll"
