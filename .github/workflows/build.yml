@@ -11,23 +11,37 @@ jobs:
       TOKENACCESS: ${{ secrets.GITHUB_TOKEN }} 
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [ 3.7]
 
     steps:
       - uses: actions/checkout@v2
-      - name: Download and extract Cairo Binary
-        run: |
-          
-          curl -L https://github.com/preshing/cairo-windows/releases/download/with-tee/cairo-windows-1.17.2.zip -o cairocomplied.zip
-          7z x cairocomplied.zip
-          Move-Item 'cairo-windows-*' "cairocomplied"
-          #Move-Item 'cairocomplied\include\cairo\*' "cairocomplied\include"
-          tree
       - name: Set up Python ${{ matrix.python-version }} for x64
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64'
+      - name: Install Meson
+        run: |
+          pip install meson
+          curl -L https://github.com/ninja-build/ninja/releases/download/v1.10.1/ninja-win.zip -o ninja.zip
+          7z x ninja.zip -oninja
+          $env:PATH="$PWD\ninja;$env:PATH"
+          echo "::set-env name=PATH::$env:PATH"
+      - name: setup-msys2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-toolchain
+      - name: Download and extract Cairo Binary
+        run: |
+          curl -L https://github.com/preshing/cairo-windows/releases/download/with-tee/cairo-windows-1.17.2.zip -o cairocomplied.zip
+          7z x cairocomplied.zip
+          Move-Item 'cairo-windows-*' "cairocomplied"
+          #Move-Item 'cairocomplied\include\cairo\*' "cairocomplied\include"
+          tree
+
       - name: Build x64 Build
         run: |
           $env:INCLUDE="$PWD\cairocomplied\include\"
