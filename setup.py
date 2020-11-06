@@ -520,7 +520,7 @@ def main():
         ],
     )
 
-    with io.open('README.rst', encoding="utf-8") as h:
+    with io.open(os.path.join(__file__,'README.rst'), encoding="utf-8") as h:
         long_description = h.read()
 
     cmdclass = {
