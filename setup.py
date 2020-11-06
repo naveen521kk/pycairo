@@ -5,7 +5,7 @@ import subprocess
 import sys
 import os
 import errno
-
+from pathlib import Path
 try:
     from setuptools import setup
 except ImportError:
@@ -520,7 +520,7 @@ def main():
         ],
     )
 
-    with io.open(os.path.join(__file__,'README.rst'), encoding="utf-8") as h:
+    with io.open(Path(__file__).parent /'README.rst', encoding="utf-8") as h:
         long_description = h.read()
 
     cmdclass = {
