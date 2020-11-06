@@ -17,6 +17,8 @@ jobs:
       CIBW_BEFORE_BUILD_MACOS: "brew install cairo"
       CIBW_TEST_REQUIRES: pytest
       CIBW_TEST_COMMAND: "python {project}/setup.py test"
+      CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2010_x86_64:latest
+      CIBW_MANYLINUX_I686_IMAGE: quay.io/pypa/manylinux2010_i686:latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
