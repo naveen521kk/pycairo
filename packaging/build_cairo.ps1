@@ -45,8 +45,7 @@ Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
 
 
-meson setup `
-    --prefix="$PREFIX\$arch"`
+meson setup --prefix="$PREFIX\$arch" `
     -Dtee=enabled `
     -Dtests=disabled `
     -Dfreetype=disabled `
