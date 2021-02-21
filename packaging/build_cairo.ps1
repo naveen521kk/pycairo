@@ -25,7 +25,7 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
 pip install meson==0.56.*
 if ($arch -eq "x86"){
     Write-Output "Getting pkg-config"
-    curl https://github.com/pkgconf/pkgconf/archive/pkgconf-1.7.0.zip -o pkgconf.zip
+    curl -L https://github.com/pkgconf/pkgconf/archive/pkgconf-1.7.0.zip -o pkgconf.zip
     7z x pkgconf.zip
     Move-Item -Path pkgconf-* -Destination pkgconf -Force
     $env:PKG_CONFIG_PATH=""
