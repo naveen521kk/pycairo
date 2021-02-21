@@ -79,6 +79,26 @@ meson setup --prefix="$PREFIX\$arch" `
 meson install -C="_build"
 Set-Location ../../
 
+meson subprojects download gperf
+Set-Location subprojects/gperf
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    --wrap-mode=nofallback `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
+meson subprojects download expat
+Set-Location subprojects/expat-*
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    --wrap-mode=nofallback `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
 meson subprojects download freetype2
 Set-Location subprojects/freetype2
 meson setup --prefix="$PREFIX\$arch" `
