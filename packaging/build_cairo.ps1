@@ -129,6 +129,7 @@ meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
     --wrap-mode=nofallback `
+    --force-fallback-for=expat `
     -Dglib=disabled `
     cairo_builddir `
     cairo
