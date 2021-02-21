@@ -33,7 +33,7 @@ meson setup `
     --buildtype=release `
     -Dtee=enabled `
     -Dtests=disabled `
-    cairobuild_dir `
+    cairo_builddir `
     cairo
 
 meson compile -C cairo_builddir
