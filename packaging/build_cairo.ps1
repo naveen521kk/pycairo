@@ -26,17 +26,18 @@ curl -L https://gitlab.freedesktop.org/cairo/cairo/-/archive/$CAIRO_VERSION/cair
 tar -xf cairo-$($CAIRO_VERSION).tar.gz
 Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
-pip install meson==0.57.1
+pip install meson==0.56.*
 
 meson setup `
     --default-library=static `
     --buildtype=release `
     -Dtee=enabled `
     -Dtests=disabled `
-    --backend=vs `
+    --backend=vs2017 `
     --wrap-mode=nopromote `
-    --cmake-prefix-path="" `
-    --pkg-config-path="" `
+    --build.cmake-prefix-path="" `
+    --build.pkg-config-path="" `
+    -Dglib=disabled `
     cairo_builddir `
     cairo
 
