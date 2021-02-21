@@ -22,6 +22,7 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
         set-content env:\"$name" $value
     }
 }
+pip install meson==0.56.*
 if ($arch -eq "x86"){
     Write-Output "Getting pkg-config"
     curl https://github.com/pkgconf/pkgconf/archive/pkgconf-1.7.0.zip -o pkgconf.zip
@@ -42,7 +43,7 @@ curl -L https://gitlab.freedesktop.org/cairo/cairo/-/archive/$CAIRO_VERSION/cair
 tar -xf cairo-$($CAIRO_VERSION).tar.gz
 Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
-pip install meson==0.56.*
+
 
 meson setup `
     --default-library=static `
