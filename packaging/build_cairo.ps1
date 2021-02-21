@@ -22,7 +22,7 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
         set-content env:\"$name" $value
     }
 }
-pip install meson==0.56.*
+pip install meson==0.56.* ninja
 if ($arch -eq "x86"){
     Write-Output "Getting pkg-config"
     curl -L https://github.com/pkgconf/pkgconf/archive/pkgconf-1.7.0.zip -o pkgconf.zip
@@ -53,7 +53,6 @@ meson setup `
     -Dtests=disabled `
     -Dfreetype=disabled `
     -Dfontconfig=disabled `
-    --backend=vs2017 `
     --build.cmake-prefix-path="" `
     --build.pkg-config-path="" `
     -Dglib=disabled `
