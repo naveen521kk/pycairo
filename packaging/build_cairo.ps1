@@ -66,7 +66,7 @@ meson install -C="_build"
 Set-Location ../../
 
 meson subprojects download pixman
-Set-Location subprojects/freetype2
+Set-Location subprojects/pixman
 meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
