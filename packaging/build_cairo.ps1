@@ -52,6 +52,7 @@ Set-Location subprojects/zlib-*
 meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
+    --wrap-mode=nofallback `
     _build
 meson install -C="_build"
 Set-Location ../../
@@ -61,6 +62,7 @@ Set-Location subprojects/libpng-*
 meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
+    --wrap-mode=nofallback `
     _build
 meson install -C="_build"
 $fp="$PREFIX\$arch\lib\pkgconfig\libpng.pc"
@@ -72,6 +74,7 @@ Set-Location subprojects/pixman
 meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
+    --wrap-mode=nofallback `
     _build
 meson install -C="_build"
 Set-Location ../../
@@ -81,6 +84,7 @@ Set-Location subprojects/fontconfig
 meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
+    --wrap-mode=nofallback `
     _build
 meson install -C="_build"
 Set-Location ../../
@@ -90,6 +94,7 @@ Set-Location subprojects/freetype2
 meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
+    --wrap-mode=nofallback `
     _build
 meson install -C="_build"
 Set-Location ../../
@@ -101,6 +106,7 @@ meson setup --prefix="$PREFIX\$arch" `
     -Dfreetype=enabled `
     --default-library=static `
     --buildtype=release `
+    --wrap-mode=nofallback `
     -Dglib=disabled `
     cairo_builddir `
     cairo
