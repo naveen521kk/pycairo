@@ -6,11 +6,13 @@ if ($arch -eq 32) {
     Write-Output "Builing 32 bit-binaries"
     $host_arch = "x86"
     $arch = "x86"
+    $env:PLATFORM="x86"
 }
 else {
     Write-Output "Builing 64 bit-binaries"
     $host_arch = "amd64"
     $arch = "amd64"
+    $env:PLATFORM="x64"
 }
 # from https://github.com/microsoft/vswhere/wiki/Start-Developer-Command-Prompt#using-powershell
 $installationPath = vswhere.exe -prerelease -latest -property installationPath
