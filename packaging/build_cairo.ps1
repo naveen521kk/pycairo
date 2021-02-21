@@ -43,6 +43,8 @@ curl -L https://gitlab.freedesktop.org/cairo/cairo/-/archive/$CAIRO_VERSION/cair
 tar -xf cairo-$($CAIRO_VERSION).tar.gz
 Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
+$env:PKG_CONFIG_PATH="$PREFIX\$arch\lib\pkgconfig"
+
 Set-Location cairo
 
 meson subprojects download zlib
@@ -95,8 +97,6 @@ meson setup --prefix="$PREFIX\$arch" `
     -Dtee=enabled `
     -Dtests=disabled `
     -Dfreetype=enabled `
-    --build.cmake-prefix-path="" `
-    --build.pkg-config-path="" `
     --default-library=static `
     --buildtype=release `
     -Dglib=disabled `
