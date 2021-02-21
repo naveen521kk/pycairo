@@ -50,7 +50,7 @@ Set-Location cairo
 meson subprojects download zlib
 Set-Location subprojects/zlib-*
 meson setup --prefix="$PREFIX\$arch" `
-    --default-library=both `
+    --default-library=static `
     --buildtype=release `
     _build
 meson install -C="_build"
@@ -63,6 +63,8 @@ meson setup --prefix="$PREFIX\$arch" `
     --buildtype=release `
     _build
 meson install -C="_build"
+$fp="$PREFIX\$arch\lib\pkgconfig\libpng.pc"
+(Get-Content -Path $fp) -replace '\\','/' | Set-Content -Path $fp
 Set-Location ../../
 
 meson subprojects download pixman
