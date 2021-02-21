@@ -35,6 +35,8 @@ meson setup `
     -Dtests=disabled `
     --backend=vs `
     --wrap-mode=nopromote `
+    --cmake-prefix-path="" `
+    --pkg-config-path="" `
     cairo_builddir `
     cairo
 
