@@ -22,6 +22,16 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
         set-content env:\"$name" $value
     }
 }
+if ($arch -eq "x86"){
+    $env:PKG_CONFIG_PATH=""
+    meson setup --prefix=C:\build\pkg-config --buildtype=release -Dtests=false pkg_conf_build pkgconf
+    meson compile -C pkg_conf_build
+    meson install --no-rebuild -C pkg_conf_build
+    ln -sf C:\build\pkg-config\bin\pkgconf.exe C:\build\pkg-config\pkg-config
+    Rename-Item C:\build\pkg-config\bin\pkgconf.exe pkg-config.exe -Force
+}
+$env:PATH="C:\build\pkg-config\bin;$env:PATH"
+
 Set-Location "$TEMP"
 
 curl -L https://gitlab.freedesktop.org/cairo/cairo/-/archive/$CAIRO_VERSION/cairo-$($CAIRO_VERSION).tar.gz -o cairo-$($CAIRO_VERSION).tar.gz
