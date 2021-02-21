@@ -34,6 +34,7 @@ meson setup `
     -Dtee=enabled `
     -Dtests=disabled `
     --backend=vs `
+    --wrap-mode=nopromote `
     cairo_builddir `
     cairo
 
