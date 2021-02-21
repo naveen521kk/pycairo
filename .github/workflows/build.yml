@@ -23,6 +23,8 @@ jobs:
       
       - name: Build Cairo
         run: |
+          $env:PKG_CONFIG_PATH=""
+          $env:CMAKE_PREFIX_PATH=""
           packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 32
           packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 64
           7z a cairo.zip "C:\cairo"
