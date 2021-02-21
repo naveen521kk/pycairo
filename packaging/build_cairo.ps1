@@ -34,7 +34,6 @@ meson setup `
     -Dtee=enabled `
     -Dtests=disabled `
     --backend=vs2017 `
-    --wrap-mode=nopromote `
     --build.cmake-prefix-path="" `
     --build.pkg-config-path="" `
     -Dglib=disabled `
