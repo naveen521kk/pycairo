@@ -1,4 +1,4 @@
-param($CAIRO_VERSION, $PREFIX, $ARCH)
+param($CAIRO_VERSION, $PREFIX, $arch)
 
 $prev_PATH = $env:PATH
 Write-Output "Setting enviroment variable using vswhere"
@@ -46,15 +46,15 @@ Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
 
 meson setup `
-    --prefix="$PREFIX"`
-    --default-library=static `
-    --buildtype=release `
+    --prefix="$PREFIX\$arch"`
     -Dtee=enabled `
     -Dtests=disabled `
     -Dfreetype=disabled `
     -Dfontconfig=disabled `
     --build.cmake-prefix-path="" `
     --build.pkg-config-path="" `
+    --default-library=static `
+    --buildtype=release `
     -Dglib=disabled `
     cairo_builddir `
     cairo
