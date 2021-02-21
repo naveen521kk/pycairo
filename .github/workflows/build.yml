@@ -1,0 +1,33 @@
+name: Build Wheels
+
+on:
+  push:
+  pull_request:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: windows-2016
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Build Cairo
+        run: |
+          packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 32
+          packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 64
+          7z a cairo.zip "C:\cairo"
+      
+      - uses: actions/upload-artifact@v2
+        with:
+          path: cairo.zip
+          name: cairo.zip
