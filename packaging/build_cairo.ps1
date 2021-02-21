@@ -47,6 +47,7 @@ Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
 meson setup `
     --default-library=static `
+    --prefix="$PREFIX\$ARCH"`
     --buildtype=release `
     -Dtee=enabled `
     -Dtests=disabled `
