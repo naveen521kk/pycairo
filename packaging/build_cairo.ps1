@@ -23,6 +23,10 @@ if ($installationPath -and (test-path "$installationPath\Common7\Tools\vsdevcmd.
     }
 }
 if ($arch -eq "x86"){
+    Write-Output "Getting pkg-config"
+    curl https://github.com/pkgconf/pkgconf/archive/pkgconf-1.7.0.zip -o pkgconf.zip
+    7z x pkgconf.zip
+    Move-Item -Path pkgconf-* -Destination pkgconf -Force
     $env:PKG_CONFIG_PATH=""
     meson setup --prefix=C:\build\pkg-config --buildtype=release -Dtests=false pkg_conf_build pkgconf
     meson compile -C pkg_conf_build
