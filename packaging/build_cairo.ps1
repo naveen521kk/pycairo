@@ -115,6 +115,7 @@ meson setup --prefix="$PREFIX\$arch" `
     --default-library=static `
     --buildtype=release `
     --wrap-mode=nofallback `
+    --force-fallback-for=expat `
     _build
 meson install -C="_build"
 Set-Location ../../
