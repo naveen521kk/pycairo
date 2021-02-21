@@ -92,7 +92,7 @@ Set-Location ../../
 meson subprojects download expat
 Set-Location subprojects/expat-*
 meson setup --prefix="$PREFIX\$arch" `
-    --default-library=static `
+    --default-library=shared `
     --buildtype=release `
     --wrap-mode=nofallback `
     _build
