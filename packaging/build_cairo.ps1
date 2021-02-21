@@ -43,6 +43,8 @@ curl -L https://gitlab.freedesktop.org/cairo/cairo/-/archive/$CAIRO_VERSION/cair
 tar -xf cairo-$($CAIRO_VERSION).tar.gz
 Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
+Set-Location cairo
+
 meson subprojects download libpng
 Set-Location subprojects/libpng-*
 meson setup --prefix="$PREFIX\$arch" `
@@ -79,7 +81,7 @@ meson setup --prefix="$PREFIX\$arch" `
 meson install -C="_build"
 Set-Location ../../
 
-
+Set-Location ../
 meson setup --prefix="$PREFIX\$arch" `
     -Dtee=enabled `
     -Dtests=disabled `
