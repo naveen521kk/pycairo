@@ -48,7 +48,7 @@ Set-Location cairo
 meson subprojects download zlib
 Set-Location subprojects/zlib-*
 meson setup --prefix="$PREFIX\$arch" `
-    --default-library=static `
+    --default-library=both `
     --buildtype=release `
     _build
 meson install -C="_build"
