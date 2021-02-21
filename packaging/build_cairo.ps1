@@ -79,6 +79,16 @@ meson setup --prefix="$PREFIX\$arch" `
 meson install -C="_build"
 Set-Location ../../
 
+meson subprojects download freetype2
+Set-Location subprojects/freetype2
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    --wrap-mode=nofallback `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
 meson subprojects download fontconfig
 Set-Location subprojects/fontconfig
 meson setup --prefix="$PREFIX\$arch" `
@@ -89,15 +99,6 @@ meson setup --prefix="$PREFIX\$arch" `
 meson install -C="_build"
 Set-Location ../../
 
-meson subprojects download freetype2
-Set-Location subprojects/freetype2
-meson setup --prefix="$PREFIX\$arch" `
-    --default-library=static `
-    --buildtype=release `
-    --wrap-mode=nofallback `
-    _build
-meson install -C="_build"
-Set-Location ../../
 
 Set-Location ../
 meson setup --prefix="$PREFIX\$arch" `
