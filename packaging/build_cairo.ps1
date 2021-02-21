@@ -45,6 +45,15 @@ Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
 Set-Location cairo
 
+meson subprojects download zlib
+Set-Location subprojects/zlib-*
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
 meson subprojects download libpng
 Set-Location subprojects/libpng-*
 meson setup --prefix="$PREFIX\$arch" `
