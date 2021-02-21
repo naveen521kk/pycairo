@@ -20,12 +20,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Clean
-        shell: bash
-        run: |
-          rm -rf C:\Strawberry
       - name: Build Cairo
         run: |
+          $env:PATH="C:\build\pkg-config\bin;$env:PATH"
           $env:PKG_CONFIG_PATH=""
           $env:CMAKE_PREFIX_PATH=""
           packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 32
