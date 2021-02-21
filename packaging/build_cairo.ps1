@@ -43,13 +43,47 @@ curl -L https://gitlab.freedesktop.org/cairo/cairo/-/archive/$CAIRO_VERSION/cair
 tar -xf cairo-$($CAIRO_VERSION).tar.gz
 Move-Item cairo-$($CAIRO_VERSION) cairo -Force
 
+meson subprojects download libpng
+Set-Location subprojects/libpng-*
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
+meson subprojects download pixman
+Set-Location subprojects/freetype2
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
+meson subprojects download fontconfig
+Set-Location subprojects/fontconfig
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    _build
+meson install -C="_build"
+Set-Location ../../
+
+meson subprojects download freetype2
+Set-Location subprojects/freetype2
+meson setup --prefix="$PREFIX\$arch" `
+    --default-library=static `
+    --buildtype=release `
+    _build
+meson install -C="_build"
+Set-Location ../../
 
 
 meson setup --prefix="$PREFIX\$arch" `
     -Dtee=enabled `
     -Dtests=disabled `
-    -Dfreetype=disabled `
-    -Dfontconfig=disabled `
+    -Dfreetype=enabled `
     --build.cmake-prefix-path="" `
     --build.pkg-config-path="" `
     --default-library=static `
