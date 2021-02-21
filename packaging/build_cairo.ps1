@@ -50,6 +50,8 @@ meson setup `
     --buildtype=release `
     -Dtee=enabled `
     -Dtests=disabled `
+    -Dfreetype=disabled `
+    -Dfontconfig=disabled `
     --backend=vs2017 `
     --build.cmake-prefix-path="" `
     --build.pkg-config-path="" `
