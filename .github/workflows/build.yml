@@ -30,14 +30,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Build Cairo
+        shell: pwsh
         run: |
-          $VCPKG_ROOT/vcpkg install cairo:x64-windows-static
+          & "$env:VCPKG_ROOT/vcpkg.exe" install cairo:x64-windows-static
       - name: Build PkgConfig
+        shell: pwsh
         run: |
           packaging/build_pkg_config.ps1
       - name: Build Wheels
         shell: pwsh
         run: |
+          $VCPKG_ROOT =$env:VCPKG_ROOT
           $env:PATH="C:\build\pkg-config\bin;$env:PATH"
           $env:PKG_CONFIG_PATH="$VCPKG_ROOT\installed\x64-windows-static\lib\pkgconfig"
           $thing=pkg-config --cflags-only-I cairo
