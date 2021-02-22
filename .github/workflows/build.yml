@@ -33,25 +33,16 @@ jobs:
         shell: pwsh
         run: |
           & "$env:VCPKG_ROOT/vcpkg.exe" install cairo[core]:x64-windows-static
-      - name: Build PkgConfig
-        shell: pwsh
-        run: |
-          packaging/build_pkg_config.ps1
+
       - name: Build Wheels
         shell: pwsh
         run: |
           $VCPKG_ROOT =$env:VCPKG_ROOT
           $env:PATH="C:\build\pkg-config\bin;$env:PATH"
           $env:INCLUDE="$VCPKG_ROOT\installed\x64-windows-static\include\cairo"
-          $env:LIB="$VCPKG_ROOT\installed\x64-windows\lib"
-          #$libs = Get-ChildItem -Path "$VCPKG_ROOT\installed\x64-windows\lib" –File
-          #$env:LIB=""
-          #for($i = 0; $i -lt $libs.length; $i++){
-          #  $env:LIB+="$VCPKG_ROOT\installed\x64-windows\lib\"+$libs[$i].name+';'
-          #}
-          
+          $env:LIB="$VCPKG_ROOT\installed\x64-windows\lib"    
           pip install build
-          python setup.py bdist_wheel
+          python -m build
 
       - uses: actions/upload-artifact@v2
         if: always()
