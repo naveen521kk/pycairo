@@ -24,6 +24,7 @@ jobs:
         uses: lukka/run-vcpkg@v6
         with:
           setupOnly: true
+          vcpkgGitCommitId: a037d826492039db9d58af47a1e1248037d15f40
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
