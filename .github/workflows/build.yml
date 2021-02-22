@@ -54,3 +54,9 @@ jobs:
         with:
           path: dist
           name: cairo.zip
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          path: vcpkg/buildtrees
+          name: logs.zip
+
