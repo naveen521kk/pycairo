@@ -466,7 +466,10 @@ class build_ext(du_build_ext):
         # the paths to the Cairo headers and libraries,
         # respectively.
         if self.compiler_type == "msvc":
-            ext.libraries += ['cairo']
+            if os.getenv('CI') == "true"
+                ext.libraries += ['cairo','libpng16','gdi32','msimg32','libexpatMD','zlib','pixman-1','User32']
+            else:
+                ext.libraries += ['cairo']
         else:
             pkg_config_version_check('cairo', CAIRO_VERSION_REQUIRED)
             ext.include_dirs += pkg_config_parse('--cflags-only-I', 'cairo')
