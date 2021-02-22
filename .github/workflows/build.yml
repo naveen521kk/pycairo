@@ -36,7 +36,7 @@ jobs:
         with:
           setupOnly: true
           vcpkgGitCommitId: ${{ env.vcpkg_commit }}
-      - name: Build Cairo x64 and x86
+      - name: Build Cairo
         if: steps.cache-primes.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
@@ -45,8 +45,8 @@ jobs:
       - name: Build Wheels
         shell: cmd
         run: |
-          $env:INCLUDE="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows-static\include\cairo"
-          $env:LIB="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows\lib"    
+          set INCLUDE="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows-static\include\cairo"
+          set LIB="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows\lib"    
           pip install build
           python -m build
 
@@ -54,9 +54,9 @@ jobs:
         if: always()
         with:
           path: vcpkg\installed
-          name: cairo.zip
+          name: cairo-${{ matrix.arch }}.zip
       - uses: actions/upload-artifact@v2
         if: always()
         with:
           path: dist
-          name: dist.zip
+          name: dist-${{ matrix.arch }}.zip
