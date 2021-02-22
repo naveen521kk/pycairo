@@ -46,7 +46,7 @@ jobs:
         shell: cmd
         run: |
           set INCLUDE="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows-static\include\cairo"
-          set LIB="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows\lib"    
+          set LIB="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows-static\lib"    
           pip install build
           python -m build
 
