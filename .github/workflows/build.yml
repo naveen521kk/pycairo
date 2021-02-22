@@ -46,7 +46,7 @@ jobs:
           $libs = Get-ChildItem -Path "$VCPKG_ROOT\installed\x64-windows-static\lib" –File
           $env:LIB=""
           for($i = 0; $i -lt $libs.length; $i++){
-            $env:LIB+="$VCPKG_ROOT\installed\x64-windows-static\lib\"+$libs[$i]+';'
+            $env:LIB+="$VCPKG_ROOT\installed\x64-windows-static\lib\"+$libs[$i].name+';'
           }
           pip install build
           python -m build
