@@ -32,7 +32,7 @@ jobs:
       - name: Build Cairo
         shell: pwsh
         run: |
-          & "$env:VCPKG_ROOT/vcpkg.exe" install cairo:x64-windows-static
+          & "$env:VCPKG_ROOT/vcpkg.exe" install cairo[core]:x64-windows-static
       - name: Build PkgConfig
         shell: pwsh
         run: |
