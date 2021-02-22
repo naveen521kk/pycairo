@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    env:
+      buildDir: '${{ github.workspace }}/build/'
     runs-on: windows-2016
     strategy:
       matrix:
@@ -15,22 +17,36 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      - uses: lukka/get-cmake@latest
+      
+      - name: Restore from cache and install vcpkg
+        # Download and build vcpkg, without installing any port. If content is cached already, it is a no-op.
+        uses: lukka/run-vcpkg@v6
+        with:
+          setupOnly: true
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Build Cairo
-        continue-on-error: true
+        run: |
+          $VCPKG_ROOT/vcpkg install cairo:x64-windows-static
+      - name: Build PkgConfig
+        run: |
+          packaging/build_pkg_config.ps1
+      - name: Build Wheels
+        shell: pwsh
         run: |
           $env:PATH="C:\build\pkg-config\bin;$env:PATH"
-          $env:PKG_CONFIG_PATH=""
-          $env:CMAKE_PREFIX_PATH=""
-          packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 32
-          packaging/build_cairo.ps1 "1.17.4" "C:\cairo" 64
-          7z a cairo.zip "C:\cairo"
-      
+          $env:PKG_CONFIG_PATH="$VCPKG_ROOT\installed\x64-windows-static\lib\pkgconfig"
+          $thing=pkg-config --cflags-only-I cairo
+          $env:INCLUDE=python -c "a='${thing}';print(';'.join([i[2:] for i in a.split()]))"
+          $env:LIB="$VCPKG_ROOT\installed\x64-windows-static\lib\cairo.lib"
+          
+          pip install build
+          python -m build
+
       - uses: actions/upload-artifact@v2
         with:
-          path: C:\cairo
+          path: dist
           name: cairo.zip
