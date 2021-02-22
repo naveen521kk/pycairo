@@ -51,7 +51,7 @@ jobs:
           #}
           
           pip install build
-          python -m build
+          python setup.py bdist_wheel
 
       - uses: actions/upload-artifact@v2
         if: always()
