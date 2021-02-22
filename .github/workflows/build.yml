@@ -42,21 +42,23 @@ jobs:
         run: |
           $VCPKG_ROOT =$env:VCPKG_ROOT
           $env:PATH="C:\build\pkg-config\bin;$env:PATH"
-          $env:PKG_CONFIG_PATH="$VCPKG_ROOT\installed\x64-windows-static\lib\pkgconfig"
-          $thing=pkg-config --cflags-only-I cairo
-          $env:INCLUDE=python -c "a='${thing}';print(';'.join([i[2:] for i in a.split()]))"
-          $env:LIB="$VCPKG_ROOT\installed\x64-windows-static\lib\cairo.lib"
-          
+          $env:INCLUDE="$VCPKG_ROOT\installed\x64-windows-static\include\cairo"
+          $libs = Get-ChildItem -Path "$VCPKG_ROOT\installed\x64-windows-static\lib" –File
+          $env:LIB=""
+          for($i = 0; $i -lt $libs.length; $i++){
+            $env:LIB+="$VCPKG_ROOT\installed\x64-windows-static\lib\"+$libs[$i]+';'
+          }
           pip install build
           python -m build
 
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
-          path: dist
+          path: vcpkg\installed
           name: cairo.zip
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-          path: vcpkg/buildtrees
-          name: logs.zip
+          path: dist
+          name: dist.zip
 
