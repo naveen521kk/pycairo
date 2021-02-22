@@ -32,7 +32,7 @@ jobs:
       - name: Build Cairo
         shell: pwsh
         run: |
-          & "$env:VCPKG_ROOT/vcpkg.exe" install cairo[core]:x64-windows-static
+          & "$env:VCPKG_ROOT/vcpkg.exe" install cairo[core]:x64-windows
       - name: Build PkgConfig
         shell: pwsh
         run: |
@@ -42,11 +42,11 @@ jobs:
         run: |
           $VCPKG_ROOT =$env:VCPKG_ROOT
           $env:PATH="C:\build\pkg-config\bin;$env:PATH"
-          $env:INCLUDE="$VCPKG_ROOT\installed\x64-windows-static\include\cairo"
-          $libs = Get-ChildItem -Path "$VCPKG_ROOT\installed\x64-windows-static\lib" –File
+          $env:INCLUDE="$VCPKG_ROOT\installed\x64-windows\include\cairo"
+          $libs = Get-ChildItem -Path "$VCPKG_ROOT\installed\x64-windows\lib" –File
           $env:LIB=""
           for($i = 0; $i -lt $libs.length; $i++){
-            $env:LIB+="$VCPKG_ROOT\installed\x64-windows-static\lib\"+$libs[$i].name+';'
+            $env:LIB+="$VCPKG_ROOT\installed\x64-windows\lib\"+$libs[$i].name+';'
           }
           pip install build
           python -m build
