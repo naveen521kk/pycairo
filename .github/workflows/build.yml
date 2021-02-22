@@ -13,6 +13,7 @@ jobs:
       vcpkg_commit: 'a037d826492039db9d58af47a1e1248037d15f40'
     runs-on: windows-2016
     strategy:
+      fail-fast: false
       matrix:
         python-version: [3.6,3.7,3.8,3.9]
         arch: ['x64','x86']
@@ -43,10 +44,11 @@ jobs:
           & "$env:VCPKG_ROOT/vcpkg.exe" install cairo[core]:${{ matrix.arch }}-windows-static
 
       - name: Build Wheels
-        shell: cmd
+        shell: pwsh
         run: |
-          set INCLUDE="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows-static\include\cairo"
-          set LIB="%VCPKG_ROOT%\installed\${{ matrix.arch }}-windows-static\lib"    
+          $VCPKG_ROOT = $env:VCPKG_ROOT
+          $env:INCLUDE="$VCPKG_ROOT\installed\${{ matrix.arch }}-windows-static\include\cairo"
+          $env:LIB="$VCPKG_ROOT\installed\${{ matrix.arch }}-windows-static\lib"
           pip install build
           python -m build
 
